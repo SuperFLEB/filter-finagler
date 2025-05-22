@@ -1,0 +1,60 @@
+.filterNode {
+	font: 12pt "Helvetica Neue", Helvetica, Arial, sans-serif;
+	min-width: 10em;
+
+	background-color: rgba(127, 127, 127, 0.2);
+	box-shadow: 2px 2px 4px #000;
+	border-radius: 1ch;
+
+	h1 {
+		font: inherit;
+		margin: 0;
+		padding: 0.5lh 1em;
+		color: var(--barFg);
+		background-color: var(--barBg);
+		border-radius: 1ch 1ch 0 0;
+	}
+
+	.vis {
+		list-style-type: none;
+		display: flex;
+		gap: 0.5em;
+
+		flex-direction: row;
+		margin: 0;
+		padding: 0.5em;
+	}
+
+	.vis li img {
+		filter: saturate(0) brightness(150%);
+	}
+
+	.vis button {
+		appearance: none;
+		border: none;
+		background: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.handles {
+		font-size: .8em;
+
+		display: flex;
+		flex-direction: row;
+		padding: 1lh 0;
+
+		> div {
+			display: flex;
+			flex-direction: column;
+			flex-basis: 50%;
+			flex-grow: 1;
+		}
+
+		.vue-flow__handle {
+			transform: none;
+			position: static;
+		}
+
+	}
+}

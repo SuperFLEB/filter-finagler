@@ -1,0 +1,17 @@
+.graph {
+	--vf-node-bg: #f00;
+	--vf-node-text: #222;
+	--vf-connection-path: #b1b1b7;
+	--vf-handle: #555;
+
+	:global {
+		/*
+		.vue-flow__handle {
+			width: 12px;
+			height: 12px;
+			background: var(--vf-handle);
+			border-radius: 100%;
+		}
+		*/
+	}
+}
