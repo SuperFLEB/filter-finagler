@@ -3,6 +3,7 @@ import {onMounted, onUnmounted, provide, ref, triggerRef} from "vue";
 import {Namespaces} from "@/constants.ts";
 import k from "@/providers/SVGDocumentProvider/keys.ts";
 import defaultSvg from "@/assets/default.svg?raw";
+import { domToString } from "@/util/xml";
 
 type SvgDocState = {
 	text: string;
@@ -39,7 +40,7 @@ const intf = {
 	},
 	updateXmlDocument(svgDoc: XMLDocument) {
 		if (doc.value.lastValidState.document === svgDoc) return;
-		const newText = new XMLSerializer().serializeToString(svgDoc);
+		const newText = new domToString(svgDoc);
 		doc.value.valid = true;
 		doc.value.lastValidState.text = newText;
 		doc.value.lastValidState.document = svgDoc;

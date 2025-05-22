@@ -119,7 +119,7 @@ export function toSVGDoc(doc: StructuredDocument, filterName: string, reloadable
 	if (reloadable) svgElement.setAttribute("xmlns:m", Namespaces.svgmf1);
 
 	const defsElement = svgElement.appendChild(document.createElementNS(Namespaces.svg, "defs"));
-	const filterElement = svgElement.appendChild(document.createElementNS(Namespaces.svg, "filter"));
+	const filterElement = defsElement.appendChild(document.createElementNS(Namespaces.svg, "filter"));
 
 	filterElement.setAttribute("id", filterName)
 	const domElements = mfeElements.map<Element>(fe => mfeToSvg(fe, svgDoc));

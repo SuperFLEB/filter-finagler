@@ -3,11 +3,12 @@ import useMFTransform from "@/providers/MFTransformProvider/useMFTransform.ts";
 import {computed} from "vue";
 import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
 import prettyXML from "@/util/prettyXML.ts";
+import {domToString} from "@/util/xml.ts";
 
 const {interface: intf, document: doc} = useStructuredDocumentProvider();
 const parsedString = computed(() => {
 	doc.value;
-	return prettyXML(new XMLSerializer().serializeToString(intf.toSvg()));
+	return prettyXML(domToString(intf.toSvg()));
 });
 const parsedStringLines = computed(() => (parsedString.value ?? "").split("\n"));
 </script>

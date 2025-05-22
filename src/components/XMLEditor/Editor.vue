@@ -4,6 +4,7 @@ import useDocumentProvider from "@/providers/SVGDocumentProvider/useDocumentProv
 import EditorView from "@/components/XMLEditor/EditorView.vue";
 import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
 import prettyXML from "@/util/prettyXML.ts";
+import { domToString } from "@/util/xml";
 
 type Props = { for: string };
 const props = defineProps<Props>();
@@ -19,7 +20,7 @@ const isDirty = ref<boolean>(false);
 const svgText = computed(() => {
 	doc.value;
 	const svgDoc = intf.export();
-	const text = new XMLSerializer().serializeToString(svgDoc);
+	const text = new domToString(svgDoc);
 	return prettyXML(text);
 });
 

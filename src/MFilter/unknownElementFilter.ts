@@ -1,4 +1,5 @@
 import type {FilterDef, InputValueDef} from "@/MFilter/types.ts";
+import {domToString} from "@/util/xml.ts";
 
 const inputAttrs = ["in", "in2"];
 const resultAttrs = ["result"];
@@ -34,7 +35,7 @@ export default function unknownElementFilter(feElement: Element) {
 
 	templateElement.append(...(feElement.cloneNode(true) as Element).children);
 	templateXML.appendChild(templateElement);
-	const template = new XMLSerializer().serializeToString(templateXML);
+	const template = domToString(templateXML);
 
 	return {
 		displayName: `(${tagName})`,

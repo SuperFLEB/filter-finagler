@@ -9,9 +9,7 @@ import xpath from "@/util/xpath.ts";
 import clodsToSvg from "@/MFilter/clodsToSvg.ts";
 import useDocumentProvider from "@/providers/SVGDocumentProvider/useDocumentProvider.ts";
 import type {Clod} from "@t/Clod.ts";
-
-const domParser = new DOMParser();
-const xmlSerializer = new XMLSerializer();
+import {domToString, stringToDom} from "@/util/xml.ts";
 
 const { document: doc } = useDocumentProvider();
 
@@ -64,7 +62,7 @@ watch(() => doc.value.lastValidState.text, (text, textWas) => {
 	let svgDoc: XMLDocument;
 	// TODO: Error handling
 	try {
-		svgDoc = domParser.parseFromString(text, "text/xml");
+		svgDoc = stringToDom(text, "text/xml");
 	} catch (e) {
 		console.error("SVG XML Parsing Error", e);
 		setProvides({...errorState});
@@ -82,7 +80,7 @@ watch(() => doc.value.lastValidState.text, (text, textWas) => {
 	]));
 
 	result.parsed = clodsToSvg(result.doc, result.clodsByFilter);
-	result.parsedString = result.parsed ? prettyXML(xmlSerializer.serializeToString(result.parsed)) : null;
+	result.parsedString = result.parsed ? prettyXML(domToString(result.parsed)) : null;
 	result.parsedUrl = result.parsedString ? URL.createObjectURL(new Blob([result.parsedString], {type: "text/xml"})) : null;
 
 	setProvides(result);

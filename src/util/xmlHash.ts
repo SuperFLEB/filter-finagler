@@ -1,3 +1,5 @@
+import { domToString } from "./xml";
+
 /* cyrb53 by github.com/bryc */
 function hashString(str: string, seed = 0): number {
 	let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
@@ -18,7 +20,7 @@ export function hashXmlString(xml: string, cramBeforeHash = true): number {
 }
 
 export function hashDocument(xmlDoc: Document, cramBeforeHash = true): number {
-	return hashString(cramBeforeHash ? cramDocument(xmlDoc) : new XMLSerializer().serializeToString(xmlDoc));
+	return hashString(cramBeforeHash ? cramDocument(xmlDoc) : new domToString(xmlDoc));
 }
 
 export function cramXmlString(xml: string, type: DOMParserSupportedType = "image/svg+xml") {
@@ -44,6 +46,6 @@ export function cramDocument(xmlDoc: XMLDocument) {
 		if (!walker.nextNode()) break;
 	}
 
-	const result = new XMLSerializer().serializeToString(xmlDocCopy);
+	const result = new domToString(xmlDocCopy);
 	return result;
 }
