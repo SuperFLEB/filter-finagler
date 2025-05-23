@@ -40,7 +40,7 @@ const intf = {
 	},
 	updateXmlDocument(svgDoc: XMLDocument) {
 		if (doc.value.lastValidState.document === svgDoc) return;
-		const newText = new domToString(svgDoc);
+		const newText = domToString(svgDoc);
 		doc.value.valid = true;
 		doc.value.lastValidState.text = newText;
 		doc.value.lastValidState.document = svgDoc;

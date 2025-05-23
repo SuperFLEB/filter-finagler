@@ -1,21 +1,23 @@
 <script setup lang="ts">
 import {computed, useTemplateRef} from "vue";
-import useMFTransform from "@/providers/MFTransformProvider/useMFTransform.ts";
+import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
+import {domToString} from "@/util/xml.ts";
+import prettyXML from "@/util/prettyXML.ts";
 
 const containerRef = useTemplateRef("containerRef");
-/*
-const { parsedUrl } = useMFTransform();
-const filterUrl = computed(() => {
-	return `url("${parsedUrl.value}#filter")`;
+const {interface: intf, document: doc} = useStructuredDocumentProvider();
+
+const svgText = computed(() => {
+	doc.value;
+	return prettyXML(domToString(intf.toSvg()));
 });
-*/
-const parsedUrl = "";
-const filterUrl = computed(() => `url("")`);
+const svgUrl = computed(() => URL.createObjectURL(new Blob([svgText.value], { type: "image/svg+xml" })));
+const filterUrl = computed(() => `url("${svgUrl.value}#filter")`);
+
 </script>
 
 <template>
 		<div :style="{'--filter-url': filterUrl}">
-			<object v-if="parsedUrl" type="image/svg+xml" :data="parsedUrl" style="width: 0; height: 0; visibility: hidden"></object>
 			<div class="container" ref="containerRef" />
 			<div class="filtered">
 				<div><img src="@/assets/decorative-eggs_PB6TLGYIXH.png"></div>

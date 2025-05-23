@@ -1,20 +1,29 @@
 <script setup lang="ts">
 import useMFTransform from "@/providers/MFTransformProvider/useMFTransform.ts";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
 import prettyXML from "@/util/prettyXML.ts";
 import {domToString} from "@/util/xml.ts";
 
 const {interface: intf, document: doc} = useStructuredDocumentProvider();
+
+const includeMFMeta = ref<boolean>(false);
 const parsedString = computed(() => {
 	doc.value;
-	return prettyXML(domToString(intf.toSvg()));
+	return prettyXML(domToString(intf.toSvg(includeMFMeta.value)));
 });
 const parsedStringLines = computed(() => (parsedString.value ?? "").split("\n"));
+
+function toggleMFMeta(e: InputEvent) {
+	includeMFMeta.value = (e.target as HTMLInputElement).checked;
+}
 </script>
 
 <template>
 	<div class="viewer">
+		<div class="options">
+			<label><input type="checkbox" :checked="includeMFMeta" @input="toggleMFMeta" /> Retain Edit Ability (MFilter metadata)</label>
+		</div>
 		<div class="lines">
 			<template v-for="line, idx in parsedStringLines">
 				<div class="number">{{ idx + 1 }}</div>

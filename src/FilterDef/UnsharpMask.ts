@@ -3,7 +3,7 @@ import {numeric} from "@/MFilter/util.ts";
 
 export default {
 	displayName: "Unsharp Mask",
-	appuid: "@superfleb/svgfilters/unsharpMask",
+	appuid: "@superfleb/mfilters/unsharpMask",
 	version: [1, 0, 0],
 	author: "Built-in",
 	native: false,

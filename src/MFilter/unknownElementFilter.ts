@@ -1,5 +1,6 @@
 import type {FilterDef, InputValueDef} from "@/MFilter/types.ts";
 import {domToString} from "@/util/xml.ts";
+import {Namespaces} from "@/constants.ts";
 
 const inputAttrs = ["in", "in2"];
 const resultAttrs = ["result"];
@@ -27,7 +28,7 @@ export default function unknownElementFilter(feElement: Element) {
 	const templateXML = document.implementation.createDocument(feElement.namespaceURI, "");
 	const templateDocumentElement = templateXML.createElement("fragment");
 
-	templateDocumentElement.setAttribute("xmlns:v", "vars");
+	templateDocumentElement.setAttributeNS(Namespaces.xmlns, "xmlns:v", "vars");
 	const templateElement = templateXML.createElementNS(feElement.namespaceURI, tagName);
 	for (const attrName of attributeNames) {
 		templateElement.setAttributeNS("vars", `v:${attrName}`, feElement.getAttribute(attrName) ?? "");

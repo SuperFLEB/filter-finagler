@@ -20,7 +20,7 @@ const isDirty = ref<boolean>(false);
 const svgText = computed(() => {
 	doc.value;
 	const svgDoc = intf.export();
-	const text = new domToString(svgDoc);
+	const text = domToString(svgDoc);
 	return prettyXML(text);
 });
 

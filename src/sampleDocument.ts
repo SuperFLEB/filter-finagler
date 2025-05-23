@@ -1,11 +1,10 @@
-import type {FilterInputValues, FilterOutputs, SemverArray} from "@/MFilter/types.ts";
 import type {MFilterFilter, SVGMFilterElement} from "@t/StructuredDocument.ts";
 import {Namespaces} from "@/constants.ts";
 
 const elements: SVGMFilterElement[] = [
 	{
 		instanceId: "1",
-		appuid: "@superfleb/svgfilters/unsharpMask",
+		appuid: "@superfleb/mfilters/unsharpMask",
 		version: [1, 0, 0],
 		type: "MFILTER",
 		inputs: {
@@ -18,12 +17,16 @@ const elements: SVGMFilterElement[] = [
 		outputs: {
 			result: "unsharpmasked",
 		},
+		display: {
+			x: 0,
+			y: 0,
+		}
 	},
 	{
 		instanceId: "2",
 		type: "NATIVE",
-		nativeTag: "feGaussianBlur",
-		appuid: "native:feGaussianBlur",
+		nativeTag: "feColorMatrix",
+		appuid: "native:feColorMatrix",
 		inputs: {
 			in: {
 				outputName: "unsharpmasked",
@@ -31,10 +34,20 @@ const elements: SVGMFilterElement[] = [
 			},
 		},
 		values: {
-			stdDeviation: 4,
+			values: [
+				-1,  0,  0,  0,  1,
+				 0, -1,  0,  0,  1,
+				 0,  0, -1,  0,  1,
+				 0,  0,  0,  1,  0,
+			]
 		},
 		outputs: {
 			result: "blurred",
+		},
+		display: {
+			x: 100,
+			y: 0,
+			displayName: "Color Invertotron",
 		}
 	},
 ];

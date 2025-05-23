@@ -109,9 +109,16 @@ export type FilterDef = {
 	interfaceFor?: never
 });
 
+export type DisplayInfo = {
+	x?: number;
+	y?: number;
+	name?: string;
+}
+
 export type MFilterInfo = {
 	displayName: string,
 	instanceId: string,
 	inputs: FilterDef["inputs"],
 	outputs: FilterDef["outputs"],
+	display?: DisplayInfo,
 };

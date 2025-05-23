@@ -14,7 +14,7 @@ const feColorMatrix = {
 	contexts: ["//filter"],
 
 	inputs: {
-		 label: "Input",
+		 in: { label: "Input" },
 	},
 	values: {
 		type: {

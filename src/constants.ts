@@ -11,6 +11,7 @@ export const Namespaces = Object.freeze({
 	xlink: "http://www.w3.org/1999/xlink",
 	mathml: "http://www.w3.org/1998/Math/MathML",
 	xsl: "http://www.w3.org/1999/XSL/Transform",
+	xmlns: "http://www.w3.org/2000/xmlns/"
 } as const);
 export type CommonNamespacePrefixes = keyof typeof Namespaces;
 

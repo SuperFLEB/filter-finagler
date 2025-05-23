@@ -5,7 +5,8 @@ import k from "./keys.ts";
 import type {StructuredDocument} from "@t/StructuredDocument.ts";
 
 import sampleDocument from "@/sampleDocument.ts";
-import {toSVGDoc, toSVGMFilterDoc} from "@/structuredDocument/export.ts";
+import {toSVGDoc} from "@/structuredDocument/export.ts";
+import { annotate } from "@/structuredDocument/annotate.ts";
 
 const doc = ref<StructuredDocument>(sampleDocument);
 
@@ -21,10 +22,10 @@ const intf = {
 	import(svgDocuement: XMLDocument) {
 	},
 	export(): XMLDocument {
-		return toSVGMFilterDoc(doc.value, "filter");
+		return annotate(doc.value, "filter");
 	},
-	toSvg(): XMLDocument {
-		return toSVGDoc(doc.value, "filter", true);
+	toSvg(includeMFMeta: boolean = false): XMLDocument {
+		return toSVGDoc(doc.value, "filter", includeMFMeta);
 	}
 };
 export type StructuredDocumentProviderInterface = typeof intf;

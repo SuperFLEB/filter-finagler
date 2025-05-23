@@ -37,7 +37,7 @@ export default class MFilter {
 
 	#fillTemplate(): XMLDocument {
 		const templateDoc = this.#template.cloneNode(true) as XMLDocument;
-		templateDoc.documentElement.setAttribute("xmlns:m", Namespaces.svgmf1);
+		templateDoc.documentElement.setAttributeNS(Namespaces.xmlns, "xmlns:m", Namespaces.svgmf1);
 
 		// Namespace "in"/"result" references for internal connections to the instance ID
 		const resultAttrs = new Set<string>(xpath<Attr>(templateDoc, "//*[@result]/@result").map(a => a.value));
@@ -106,7 +106,7 @@ export default class MFilter {
 		const source = this.#fillTemplate();
 		const dest = document.implementation.createDocument(Namespaces.svgmf1, "");
 		dest.appendChild(dest.createElementNS(Namespaces.svg, "svg"));
-		dest.documentElement.setAttribute("xmlns:m", Namespaces.svgmf1);
+		dest.documentElement.setAttributeNS(Namespaces.xmlns, "xmlns:m", Namespaces.svgmf1);
 		dest.documentElement.replaceChildren(...source.documentElement.childNodes);
 
 		// Move namespace of elements without namespaces

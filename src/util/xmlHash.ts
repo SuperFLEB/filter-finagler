@@ -20,7 +20,7 @@ export function hashXmlString(xml: string, cramBeforeHash = true): number {
 }
 
 export function hashDocument(xmlDoc: Document, cramBeforeHash = true): number {
-	return hashString(cramBeforeHash ? cramDocument(xmlDoc) : new domToString(xmlDoc));
+	return hashString(cramBeforeHash ? cramDocument(xmlDoc) : domToString(xmlDoc));
 }
 
 export function cramXmlString(xml: string, type: DOMParserSupportedType = "image/svg+xml") {
@@ -46,6 +46,6 @@ export function cramDocument(xmlDoc: XMLDocument) {
 		if (!walker.nextNode()) break;
 	}
 
-	const result = new domToString(xmlDocCopy);
+	const result = domToString(xmlDocCopy);
 	return result;
 }

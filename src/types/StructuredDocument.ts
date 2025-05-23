@@ -1,10 +1,10 @@
 import type {
-	FilterInputReferenceDefs,
 	FilterInputValues,
 	FilterOutputs,
-	InputValueDef,
 	SemverArray
 } from "@/MFilter/types.ts";
+
+
 import {Namespaces} from "@/constants.ts";
 import type OutsideConnections from "@t/OutsideConnections.ts";
 
@@ -25,18 +25,25 @@ type MFilterElement = {
 	nativeTag?: never,
 };
 
+type DisplayProperties = {
+	x?: number;
+	y?: number;
+	displayName?: string;
+};
+
 export type SVGMFilterElement =
 	(TagElement | MFilterElement) &
 	{
-	type: FilterElementType;
-	nativeTag?: string;
-	instanceId: string;
-	appuid: string;
-	version?: SemverArray;
-	inputs?: FilterInputReferences,
-	values?: FilterInputValues,
-	outputs?: FilterOutputs,
-};
+		type: FilterElementType;
+		nativeTag?: string;
+		instanceId: string;
+		appuid: string;
+		version?: SemverArray;
+		inputs?: FilterInputReferences,
+		values?: FilterInputValues,
+		outputs?: FilterOutputs,
+		display?: DisplayProperties,
+	};
 
 export type MFilterFilter = {
 	id: string;

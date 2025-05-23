@@ -2,9 +2,9 @@ import {type FilterDef} from "@/MFilter/types.ts";
 import average from "@/util/average.ts";
 
 export default {
+	appuid: "@superfleb/mfilters/monotone",
 	displayName: "Monotone",
 	author: "Built-in",
-	appuid: "@superfleb/svgfilters/monotone",
 	version: [1, 0, 0],
 
 	template: `<fragment xmlns:v="vars">
