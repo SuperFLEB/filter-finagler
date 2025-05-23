@@ -2,7 +2,7 @@ import type {StructuredDocument} from "@t/StructuredDocument.ts";
 import type {Node as FlowNode} from "@vue-flow/core/dist/types/node";
 import {Position} from "@vue-flow/core";
 import {Namespaces} from "@/constants.ts";
-import MFilter2 from "@/structuredDocument/MFilter2.ts";
+import MFilter from "@/MFilter/MFilter.ts";
 import {getFilterById} from "@/util/RegisterMFilter.ts";
 import {annotate} from "./annotate.ts";
 
@@ -78,7 +78,7 @@ export function toSVGDoc(doc: StructuredDocument, filterName: string, includeMFM
 	const domElements: Element[][] = mfe.map<Element[]>(fe => {
 		const filterDef = getFilterById(fe.appuid);
 		if (!filterDef) return [];
-		return Array.from(new MFilter2(filterDef).fillTemplate(fe, includeMFMeta).children);
+		return Array.from(new MFilter(filterDef).fillTemplate(fe, includeMFMeta).children);
 	});
 
 	filterElement.append(...domElements.flat(1));

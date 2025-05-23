@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import {computed, onMounted, ref, triggerRef} from "vue";
-import useDocumentProvider from "@/providers/SVGDocumentProvider/useDocumentProvider.ts";
+import {computed, onMounted, ref} from "vue";
 import EditorView from "@/components/XMLEditor/EditorView.vue";
 import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
 import prettyXML from "@/util/prettyXML.ts";
-import { domToString } from "@/util/xml";
+import {domToString} from "@/util/xml";
 
 type Props = { for: string };
 const props = defineProps<Props>();

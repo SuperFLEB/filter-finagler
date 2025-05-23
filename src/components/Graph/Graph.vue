@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import {computed, markRaw} from "vue";
-import {ConnectionMode, type Edge, type Node as FlowNode, Position, VueFlow} from "@vue-flow/core";
-import getConnections from "@/components/Graph/getConnections.ts";
+import {ConnectionMode, VueFlow} from "@vue-flow/core";
 import FilterElementNode from "@/components/Graph/Nodes/FilterElementNode.vue";
 import layout from "@/components/Graph/autoLayout.ts";
-import useMFTransform from "@/providers/MFTransformProvider/useMFTransform.ts";
-import objectMap from "@/util/objectMap.ts";
-import type {Clod} from "@t/Clod.ts";
-import {OutsideConnectionsKeys} from "@t/OutsideConnections.ts";
 import InputsNode from "@/components/Graph/Nodes/InputsNode.vue";
 import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
-import type {SVGMFilterElement} from "@t/StructuredDocument.ts";
 import {toGraph} from "@/structuredDocument/export.ts";
 
 const {document: doc} = useStructuredDocumentProvider();

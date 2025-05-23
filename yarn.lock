@@ -578,18 +578,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@superfleb/draggable@portal:/E:/webdev/draggable::locator=futile%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@superfleb/draggable@portal:/E:/webdev/draggable::locator=futile%40workspace%3A."
+"@superfleb/draggable@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "@superfleb/draggable@npm:0.1.5::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40superfleb%2Fdraggable%2F0.1.5%2Fe1dfc25017a4d66fe6b7651aa5f3cde00fc61394"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     vue: ^3.0.0
-  peerDependenciesMeta:
-    react:
-      optional: true
-    vue:
-      optional: true
+  checksum: 10c0/6dea7213a5779672b49603ec4f9bb7a59f4ab9bfd0b17339d1c8805a88034ec4ef2fb657cdd9e2a91033ef64bec51299bb6114db28e2f8dbc5cdac0dbec1121e
   languageName: node
+  linkType: hard
+
+"@superfleb/filter-finagler@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@superfleb/filter-finagler@workspace:."
+  dependencies:
+    "@codemirror/autocomplete": "npm:^6.18.6"
+    "@codemirror/commands": "npm:^6.8.0"
+    "@codemirror/lang-xml": "npm:^6.1.0"
+    "@codemirror/language": "npm:^6.10.8"
+    "@codemirror/lint": "npm:^6.8.4"
+    "@codemirror/search": "npm:^6.5.10"
+    "@codemirror/state": "npm:^6.5.2"
+    "@codemirror/view": "npm:^6.36.3"
+    "@dagrejs/dagre": "npm:^1.1.4"
+    "@superfleb/draggable": "npm:^0.1.5"
+    "@types/node": "npm:^22.13.8"
+    "@vitejs/plugin-vue": "npm:^5.2.1"
+    "@vue-flow/core": "npm:^1.43.1"
+    "@vue/tsconfig": "npm:^0.7.0"
+    colord: "npm:^2.9.3"
+    sass-embedded: "npm:^1.85.1"
+    typescript: "npm:~5.7.2"
+    vite: "npm:^6.2.0"
+    vue: "npm:^3.5.13"
+    vue-tsc: "npm:^2.2.4"
+    xml-beautify: "npm:^1.2.3"
+  languageName: unknown
   linkType: soft
 
 "@types/estree@npm:1.0.6":
@@ -1285,34 +1309,6 @@ __metadata:
   conditions: os=darwin
   languageName: node
   linkType: hard
-
-"futile@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "futile@workspace:."
-  dependencies:
-    "@codemirror/autocomplete": "npm:^6.18.6"
-    "@codemirror/commands": "npm:^6.8.0"
-    "@codemirror/lang-xml": "npm:^6.1.0"
-    "@codemirror/language": "npm:^6.10.8"
-    "@codemirror/lint": "npm:^6.8.4"
-    "@codemirror/search": "npm:^6.5.10"
-    "@codemirror/state": "npm:^6.5.2"
-    "@codemirror/view": "npm:^6.36.3"
-    "@dagrejs/dagre": "npm:^1.1.4"
-    "@superfleb/draggable": "npm:^0.0.1"
-    "@types/node": "npm:^22.13.8"
-    "@vitejs/plugin-vue": "npm:^5.2.1"
-    "@vue-flow/core": "npm:^1.43.1"
-    "@vue/tsconfig": "npm:^0.7.0"
-    colord: "npm:^2.9.3"
-    sass-embedded: "npm:^1.85.1"
-    typescript: "npm:~5.7.2"
-    vite: "npm:^6.2.0"
-    vue: "npm:^3.5.13"
-    vue-tsc: "npm:^2.2.4"
-    xml-beautify: "npm:^1.2.3"
-  languageName: unknown
-  linkType: soft
 
 "glob@npm:^10.2.2, glob@npm:^10.3.10, glob@npm:^10.3.7":
   version: 10.4.5

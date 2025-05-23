@@ -1,5 +1,5 @@
 import {type FilterDef} from "@/MFilter/types.ts";
-import {numeric} from "@/MFilter/util.ts";
+import {numeric} from "@/util/numericParams.ts";
 
 export default {
 	displayName: "Unsharp Mask",

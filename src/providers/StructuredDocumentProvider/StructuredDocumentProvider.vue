@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, provide, ref, triggerRef} from "vue";
-import {Namespaces} from "@/constants.ts";
+import {onMounted, onUnmounted, provide, ref} from "vue";
 import k from "./keys.ts";
 import type {StructuredDocument} from "@t/StructuredDocument.ts";
 
 import sampleDocument from "@/sampleDocument.ts";
 import {toSVGDoc} from "@/structuredDocument/export.ts";
-import { annotate } from "@/structuredDocument/annotate.ts";
+import {annotate} from "@/structuredDocument/annotate.ts";
 
 const doc = ref<StructuredDocument>(sampleDocument);
 

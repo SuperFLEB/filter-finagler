@@ -48,7 +48,6 @@ function annotateElement(fe: SVGMFilterElement, ownerDocument: XMLDocument, sour
  * Annotate a filter in the SVG document, adding m:fe nodes or m:... attributes as appropriate.
  */
 export function annotate(doc: StructuredDocument, filterName: string, svgDoc?: XMLDocument): XMLDocument {
-	const hasSvgDoc = Boolean(svgDoc);
 	const mfeElements = doc.filters.get(filterName)?.elements;
 	if (!mfeElements) throw new Error(`Filter ${filterName} does not exist`);
 

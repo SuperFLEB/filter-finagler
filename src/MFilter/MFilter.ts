@@ -7,7 +7,7 @@ import {Namespaces} from "@/constants.ts";
 
 const templateCache = new Map<string, Element>();
 
-export default class MFilter2 {
+export default class MFilter {
 	#filterDef: FilterDef;
 	#template: XMLDocument;
 

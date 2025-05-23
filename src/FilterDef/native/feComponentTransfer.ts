@@ -2,7 +2,7 @@ import {type FilterDef} from "@/MFilter/types.ts";
 import objectMap from "@/util/objectMap.ts";
 import xpath from "@/util/xpath.ts";
 import {Namespaces} from "@/constants.ts";
-import {numeric} from "@/MFilter/util.ts";
+import {numeric} from "@/util/numericParams.ts";
 
 const funcVars = ["R", "G", "B", "A"].map(
 	component => objectMap({

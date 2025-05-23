@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import useMFTransform from "@/providers/MFTransformProvider/useMFTransform.ts";
 import {computed, ref} from "vue";
 import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
 import prettyXML from "@/util/prettyXML.ts";
