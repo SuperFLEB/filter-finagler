@@ -1,5 +1,33 @@
-import type {ProjectModel} from "@/Project/ProjectModel.ts";
+import type {ProjectModel, SVGMFilterElement} from "@/Project/ProjectModel.ts";
 import {getFilterDef} from "@/Project/info.ts";
+import OutsideConnections from "@t/OutsideConnections.ts";
+
+function connectToNativeInput(project: ProjectModel, filterName: string, outputName: string, inInstance: SVGMFilterElement, inputName: string): ProjectModel {
+	if (!OutsideConnections[outputName as keyof typeof OutsideConnections]) {
+		console.error("Output name is not an allowed value");
+		return project;
+	}
+
+	const inFilterDef = getFilterDef(inInstance);
+
+	if (!inFilterDef) {
+		console.error("Could not find filter definition for input node");
+		return project;
+	}
+
+	if (!inFilterDef.inputs?.[inputName]) {
+		console.error("Could not find input definitions for input node");
+		return project;
+	}
+
+	inInstance.inputs = {
+		...inInstance.inputs,
+		[inputName]: outputName as keyof typeof OutsideConnections
+	};
+
+	return project;
+
+}
 
 export function connect(project: ProjectModel, filterName: string, outInstanceId: string, outputName: string, inInstanceId: string, inputName: string): ProjectModel {
 	const filter = project.filters.get(filterName);
@@ -11,6 +39,10 @@ export function connect(project: ProjectModel, filterName: string, outInstanceId
 
 	const outInstance = filter.elements.find(fe => fe.instanceId === outInstanceId);
 	const inInstance = filter.elements.find(fe => fe.instanceId === inInstanceId);
+
+	if (outInstanceId === "in:0" && inInstance) {
+		return connectToNativeInput(project, filterName, outputName, inInstance, inputName);
+	}
 
 	if (!(outInstance && inInstance)) {
 		console.error("Could not find input or output nodes in the project model.");
@@ -52,7 +84,7 @@ export function disconnect(project: ProjectModel, filterName: string, inInstance
 	const inInstance = filter.elements.find(fe => fe.instanceId === inInstanceId);
 
 	if (!inInstance) {
-		console.error("Could not find input in the project model.");
+		console.error(`Could not find input ${inputName} @ ${inInstanceId} in the project model.`);
 		return project;
 	}
 

@@ -14,7 +14,7 @@ function unescapeSplit(str: string, split: string, escapeChar: string, maxSplits
 		}
 		if (ch === split && results.length < maxSplits + 1) {
 			results.push(result);
-			result = ch;
+			result = "";
 			continue;
 		}
 		result += ch;

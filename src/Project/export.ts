@@ -5,6 +5,7 @@ import {Namespaces} from "@/constants.ts";
 import MFilter from "@/MFilters/MFilter.ts";
 import {getFilterById} from "@/util/RegisterMFilter.ts";
 import {xmlNotation} from "./xmlNotation.ts";
+import {getOutputRef} from "@/Project/util.ts";
 
 export function toGraph(project: ProjectModel, filterId: string = "filter") {
 	const filter = project.filters.get(filterId);
@@ -36,22 +37,27 @@ export function toGraph(project: ProjectModel, filterId: string = "filter") {
 			if (!input) continue;
 
 			if (typeof input === "string") {
+				const sourceHandleId = getOutputRef(input, inputsNode.id);
+				const targetHandleId = getOutputRef(name, fe.instanceId);
 				edges.push({
 					source: inputsNode.id,
 					target: fe.instanceId,
-					sourceHandleId: input,
-					targetHandleId: name,
-					id: `${input}-${name}@${fe.instanceId}`,
+					sourceHandleId,
+					targetHandleId,
+					id: `${sourceHandleId}-${targetHandleId}`,
 				});
 				continue;
 			}
 
+			const sourceHandleId = getOutputRef(input.outputName, input.outputInstanceId);
+			const targetHandleId = getOutputRef(name, fe.instanceId);
+
 			edges.push({
 				source: input.outputInstanceId,
 				target: fe.instanceId,
-				sourceHandleId: input.outputName,
-				targetHandleId: name,
-				id: `${input.outputName}@${input.outputInstanceId}-${name}@${fe.instanceId}`,
+				sourceHandleId,
+				targetHandleId,
+				id: `${sourceHandleId}-${targetHandleId}`,
 			});
 		}
 	}
