@@ -2,7 +2,7 @@ import type {
 	FilterInputValues,
 	FilterOutputs,
 	SemverArray
-} from "@/MFilter/types.ts";
+} from "@t/MFilter.ts";
 
 
 import {Namespaces} from "@/constants.ts";

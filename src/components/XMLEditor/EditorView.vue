@@ -1,30 +1,31 @@
 <script setup lang="ts">
-import {onMounted, useTemplateRef, watch} from "vue";
+import {onMounted, useTemplateRef} from "vue";
 import {
 	crosshairCursor,
 	drawSelection,
 	dropCursor,
-	EditorView, highlightActiveLine, highlightActiveLineGutter,
-	highlightSpecialChars, keymap,
+	EditorView,
+	highlightActiveLine,
+	highlightActiveLineGutter,
+	highlightSpecialChars,
+	keymap,
 	lineNumbers,
-	rectangularSelection, type ViewUpdate
+	rectangularSelection,
+	type ViewUpdate
 } from "@codemirror/view";
 import {
 	bracketMatching,
 	defaultHighlightStyle,
-	foldGutter, foldKeymap,
+	foldGutter,
+	foldKeymap,
 	indentOnInput,
 	syntaxHighlighting
 } from "@codemirror/language";
 import {EditorState} from "@codemirror/state";
 import {autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap} from "@codemirror/autocomplete";
-import {
-	defaultKeymap, history, historyKeymap, indentWithTab
-} from "@codemirror/commands";
-import {
-	searchKeymap
-} from "@codemirror/search";
-import {xml} from "@codemirror/lang-xml"
+import {defaultKeymap, history, historyKeymap, indentWithTab} from "@codemirror/commands";
+import {searchKeymap} from "@codemirror/search";
+import {xml} from "@codemirror/lang-xml";
 
 const editorRef = useTemplateRef("editorRef");
 let view: EditorView;

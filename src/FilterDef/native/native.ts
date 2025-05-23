@@ -15,7 +15,7 @@ import feOffset from "@/FilterDef/native/feOffset.ts";
 import feSpecularLighting from "@/FilterDef/native/feSpecularLighting.ts";
 import feTile from "@/FilterDef/native/feTile.ts";
 import feTurbulence from "@/FilterDef/native/feTurbulence.ts";
-import type {FilterDef} from "@/MFilter/types.ts";
+import type {FilterDef} from "@t/MFilter.ts";
 
 const nativeFilters = [
 	feBlend,

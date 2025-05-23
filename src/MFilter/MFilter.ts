@@ -1,5 +1,5 @@
 import type {SVGMFilterElement} from "@t/StructuredDocument.ts";
-import type {FilterDef} from "@/MFilter/types.ts";
+import type {FilterDef} from "@t/MFilter.ts";
 import xpath from "@/util/xpath.ts";
 import setIntersect from "@/util/setIntersect.ts";
 import {getOutputRef} from "@/structuredDocument/util.ts";

@@ -1,7 +1,5 @@
-import {type FilterDef} from "@/MFilter/types.ts";
+import {type FilterDef} from "@t/MFilter.ts";
 import objectMap from "@/util/objectMap.ts";
-import xpath from "@/util/xpath.ts";
-import {Namespaces} from "@/constants.ts";
 import {numeric} from "@/util/numericParams.ts";
 
 const funcVars = ["R", "G", "B", "A"].map(
@@ -83,18 +81,6 @@ const feComponentTransfer: FilterDef = {
 	},
 	outputs: {
 		result: {label: "Result"}
-	},
-	transformAttributes(feElement, currentAttributes) {
-		const attrChildren = xpath<Attr>(feElement, "./svg:feFuncR/@*|svg:feFuncG/@*|svg:feFuncB/@*|svg:feFuncA/@*", {svg: Namespaces.svg});
-		const newAttributes: Record<string, string> = {};
-		for (const attr of attrChildren) {
-			const name = attr.ownerElement!.localName;
-			const suffix = name.slice(-1);
-			if (!(name.startsWith("feFunc") && ["R", "G", "B", "A"].includes(suffix))) continue;
-			newAttributes[attr.localName + suffix] = attr.value;
-		}
-		console.log(newAttributes);
-		return {...currentAttributes, ...newAttributes};
 	},
 };
 

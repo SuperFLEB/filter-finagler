@@ -1,4 +1,4 @@
-import type {FilterDef} from "@/MFilter/types.ts";
+import type {FilterDef} from "@t/MFilter.ts";
 
 const feImage = {
 	displayName: "Image",

@@ -1,5 +1,5 @@
 import type {StructuredDocument} from "@t/StructuredDocument.ts";
-import type {Node as FlowNode} from "@vue-flow/core/dist/types/node";
+import type {Node as FlowNode} from "@vue-flow/core";
 import {Position} from "@vue-flow/core";
 import {Namespaces} from "@/constants.ts";
 import MFilter from "@/MFilter/MFilter.ts";

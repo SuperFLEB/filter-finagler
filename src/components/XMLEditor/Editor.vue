@@ -5,9 +5,6 @@ import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvide
 import prettyXML from "@/util/prettyXML.ts";
 import {domToString} from "@/util/xml";
 
-type Props = { for: string };
-const props = defineProps<Props>();
-
 const {interface: intf, document: doc} = useStructuredDocumentProvider();
 
 let currentEditorText: string = "";
@@ -23,11 +20,9 @@ const svgText = computed(() => {
 	return prettyXML(text);
 });
 
-console.log({s: svgText.value});
-
 function handleEditorUpdate(text: string): void {
 	currentEditorText = text;
-	isDirty.value = currentEditorText !== svgText;
+	isDirty.value = currentEditorText !== svgText.value;
 }
 
 function setEditorUpdateFunction(cb: () => void): void {

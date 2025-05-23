@@ -27,7 +27,7 @@ const path = (from: Element, to: Node) => {
 
 function getText(node: Node) {
 	let texts = [];
-	for (const child of node.childNodes) {
+	for (const child of Array.from(node.childNodes)) {
 		if (child.nodeType === Node.TEXT_NODE) {
 			texts.push(child.textContent);
 		}

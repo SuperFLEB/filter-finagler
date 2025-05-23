@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import {computed, useTemplateRef} from "vue";
+import {computed} from "vue";
 import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
 import {domToString} from "@/util/xml.ts";
 import prettyXML from "@/util/prettyXML.ts";
 
-const containerRef = useTemplateRef("containerRef");
 const {interface: intf, document: doc} = useStructuredDocumentProvider();
 
 const svgText = computed(() => {
@@ -18,7 +17,7 @@ const filterUrl = computed(() => `url("${svgUrl.value}#filter")`);
 
 <template>
 		<div :style="{'--filter-url': filterUrl}">
-			<div class="container" ref="containerRef" />
+			<div class="container" />
 			<div class="filtered">
 				<div><img src="@/assets/decorative-eggs_PB6TLGYIXH.png"></div>
 				<p>

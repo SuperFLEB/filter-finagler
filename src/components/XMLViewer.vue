@@ -21,7 +21,7 @@ function toggleMFMeta(e: InputEvent) {
 <template>
 	<div class="viewer">
 		<div class="options">
-			<label><input type="checkbox" :checked="includeMFMeta" @input="toggleMFMeta" /> Retain Edit Ability (MFilter metadata)</label>
+			<label><input type="checkbox" :checked="includeMFMeta" @input="toggleMFMeta($event as InputEvent)" /> Retain Edit Ability (MFilter metadata)</label>
 		</div>
 		<div class="lines">
 			<template v-for="line, idx in parsedStringLines">

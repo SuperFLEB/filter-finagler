@@ -10,7 +10,7 @@ import Graph from "@/components/Graph/Graph.vue";
 import XMLViewer from "@/components/XMLViewer.vue";
 import {type CSSProperties, ref, shallowRef} from "vue";
 
-const layoutRef = shallowRef<HTMLElement|null>(null);
+const layoutRef = shallowRef<HTMLElement>();
 const layoutStyleRef = ref<CSSProperties>({});
 
 const setSplit = (leftProportion: number = 0.5) => {
@@ -34,7 +34,7 @@ const setSplit = (leftProportion: number = 0.5) => {
 					(TBD)
 				</Tab>
 			</Tabs>
-			<Splitter class="splitter" :onSplit="setSplit" :parent="layoutRef" style="grid-area: splitter"/>
+			<Splitter class="splitter" :onSplit="setSplit" :parent="layoutRef!" style="grid-area: splitter"/>
 			<Tabs style="grid-area: e">
 				<Tab id="preview" title="Preview">
 					<Viewer class="viewer"/>

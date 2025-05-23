@@ -15,10 +15,13 @@ const intf = {
 	takeSnapshot() {
 	},
 	getSnapshot(): string | null {
+		return null;
 	},
 	updateText(svgText: string) {
+		svgText;
 	},
-	import(svgDocuement: XMLDocument) {
+	import(svgDocument: XMLDocument) {
+		svgDocument;
 	},
 	export(): XMLDocument {
 		return annotate(doc.value, "filter");

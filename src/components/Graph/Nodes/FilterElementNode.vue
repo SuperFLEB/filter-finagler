@@ -2,8 +2,6 @@
 import type {NodeProps} from "@vue-flow/core";
 import {computed} from "vue";
 import {colord} from "colord";
-import objectValueFilter from "@/util/objectValueFilter.ts";
-import type {InputValueDef} from "@/MFilter/types.ts";
 import objectMap from "@/util/objectMap.ts";
 import FilterIOHandle from "@/components/Graph/Nodes/FilterIOHandle.vue";
 import type {FilterElementType, SVGMFilterElement} from "@t/StructuredDocument.ts";
