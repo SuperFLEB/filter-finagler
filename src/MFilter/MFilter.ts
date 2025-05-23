@@ -1,43 +1,41 @@
-import type {FilterDef, FilterInputValues, MFilterInfo, Value} from "@/MFilter/types.ts";
-import type Bang from "@t/Bang.ts";
-import {Namespaces} from "@/constants.ts";
-import objectMap from "@/util/objectMap.ts";
+import type {SVGMFilterElement} from "@t/StructuredDocument.ts";
+import type {FilterDef} from "@/MFilter/types.ts";
 import xpath from "@/util/xpath.ts";
 import setIntersect from "@/util/setIntersect.ts";
-import {isProxy, toRaw} from "vue";
-import {processInputsToValues, processOutputsToValues} from "./util.ts";
-import type {SVGMFilterElement} from "@t/StructuredDocument.ts";
+import {getOutputRef} from "@/structuredDocument/util.ts";
+import {Namespaces} from "@/constants.ts";
 
-const nextInstanceId = (() => {
-	let instance = 0;
-	return () => (instance++).toString(36);
-})();
+const templateCache = new Map<string, Element>();
 
-export default class MFilter {
+export default class MFilter2 {
 	#filterDef: FilterDef;
 	#template: XMLDocument;
-	#instanceId: string;
-	#values: Record<string, Value> = {};
-	#processedInputValues: Record<string, Value> = {};
 
-	get instanceId(): string {
-		if (isProxy(this)) return toRaw(this).instanceId;
-		return this.#instanceId;
-	}
+	constructor(filterDef: FilterDef) {
+		this.#filterDef = filterDef;
 
-	get info(): MFilterInfo {
-		if (isProxy(this)) return toRaw(this).info;
-		return {
-			displayName: this.#filterDef.displayName,
-			instanceId: this.#instanceId,
-			inputs: this.#filterDef.inputs,
-			outputs: this.#filterDef.outputs,
+		if (!templateCache.has(filterDef.appuid)) {
+			// Wrap it in a wrapper with the SVG namespace so the elements in the template are marked with the right namespaces.
+			const wrappedNamespacedDocument = new DOMParser().parseFromString(`<wrapper xmlns="${Namespaces.svg}">${this.#filterDef.template}</wrapper>`, "text/xml");
+			const templateElement = wrappedNamespacedDocument.documentElement.children[0];
+			if (!templateElement) throw new Error(`Invalid template in MFilter ${filterDef.appuid}`);
+			templateCache.set(filterDef.appuid, templateElement);
 		}
+
+		const templateDocument = document.implementation.createDocument(Namespaces.svg, "");
+		templateDocument.appendChild(templateCache.get(filterDef.appuid)!.cloneNode(true));
+		this.#template = templateDocument;
 	}
 
-	#fillTemplate(): XMLDocument {
+	fillTemplate(fe: SVGMFilterElement, includeMFMeta: boolean): Element {
 		const templateDoc = this.#template.cloneNode(true) as XMLDocument;
-		templateDoc.documentElement.setAttributeNS(Namespaces.xmlns, "xmlns:m", Namespaces.svgmf1);
+		if (includeMFMeta) templateDoc.documentElement.setAttributeNS(Namespaces.xmlns, `xmlns:m`, Namespaces.svgmf1);
+
+		if (includeMFMeta) {
+			xpath(templateDoc, "//*").forEach(element => {
+				element.setAttributeNS(Namespaces.svgmf1, "m:instance", fe.instanceId);
+			});
+		}
 
 		// Namespace "in"/"result" references for internal connections to the instance ID
 		const resultAttrs = new Set<string>(xpath<Attr>(templateDoc, "//*[@result]/@result").map(a => a.value));
@@ -46,82 +44,52 @@ export default class MFilter {
 
 		xpath<Attr>(templateDoc, "//*[@in or @in2 or @result]/@*[name()='in' or name()='in2' or name()='result']").forEach(attr => {
 			if (internalNames.has(attr.value)) {
-				attr.value = `${attr.value}@${this.#instanceId}`;
+				attr.value = getOutputRef(attr.value, fe.instanceId);
 			}
 		});
 
 		// Fill v:... variable values
 		const vAttrs = xpath<Attr>(templateDoc, "//*[@v:*]/@v:*", {v: "vars"});
 		const normalizeAttr = (val: any | any[] | undefined) => val ? Array.isArray(val) ? val.map(e => e.toString()).join(" ") : val.toString() : val;
-		for (const result of vAttrs) {
-			const {ownerElement: element, localName: name, value} = result as Bang<Attr>;
-			const isOutput = Boolean(name === "result" && this.#filterDef.outputs?.[value]);
-			const attrValue = isOutput ? this.#processedInputValues[value] : normalizeAttr(this.#processedInputValues[value]);
 
-			element.removeAttributeNode(result);
+		for (const vAttr of vAttrs) {
+			let attrValue: string | undefined;
+
+			// Fill outputs
+			if (vAttr.localName === "result" && this.#filterDef.outputs?.[vAttr.value]) {
+				attrValue = fe.outputs?.[vAttr.value] ?? "";
+			}
+
+			// Fill inputs
+			if (this.#filterDef.inputs?.[vAttr.value]) {
+				const input = fe.inputs?.[vAttr.value];
+				if (!input || typeof input === "string") {
+					attrValue = input ?? undefined;
+				} else {
+					attrValue = getOutputRef(input.outputName, input.outputInstanceId);
+				}
+			}
+
+			// Fill values
+			if (this.#filterDef.values?.[vAttr.value]) attrValue = normalizeAttr(fe.values?.[vAttr.value]) ?? undefined;
+
 			if (attrValue === undefined) {
-				console.warn(`Undefined variable "${result.value}" referenced in "${name}"`);
+				console.warn(`Undefined variable "${vAttr.value}" referenced in "${name}"`);
 			} else if (attrValue !== null) {
-				element.setAttribute(name, attrValue.toString());
+				vAttr.ownerElement?.setAttribute(vAttr.localName, attrValue.toString());
 			}
 		}
 
-		// Add m: attributes for MFilter and instance
-		xpath(templateDoc, "//*").forEach(element => {
-			element.setAttributeNS(Namespaces.svgmf1, "m:instance", this.#instanceId);
-		})
-
-		// Prepend filter reference
-		const instanceRef = templateDoc.createElementNS(Namespaces.svgmf1, "instance");
-		templateDoc.documentElement.prepend(instanceRef);
-
-		instanceRef.setAttribute("id", this.#instanceId);
-		instanceRef.setAttribute("appuid", this.#filterDef.appuid);
-
-		return templateDoc;
-	}
-
-	updateInputValues(values: FilterInputValues, clearAllValues: boolean) {
-		const allValues = clearAllValues ? values : {...this.#values, ...values};
-		// String values
-		this.#processedInputValues = processInputsToValues(allValues, this.#filterDef);
-
-		// Derived values
-		Object.assign(
-			this.#processedInputValues,
-			objectMap(this.#filterDef.derivations ?? {}, ([name, fn]) => [name, fn({...this.#processedInputValues})])
-		);
-		// Outputs
-		Object.assign(this.#processedInputValues, processOutputsToValues(allValues as Record<string, string>, this.#filterDef));
-	}
-
-	constructor(filterDef: FilterDef, fe: SVGMFilterElement) {
-		this.#filterDef = filterDef;
-		this.#template = new DOMParser().parseFromString(this.#filterDef.template, "text/xml");
-		this.#instanceId = nextInstanceId();
-		this.updateInputValues(values ?? {}, true);
-	}
-
-	toWrappedXmlDoc(): XMLDocument {
-		const source = this.#fillTemplate();
-		const dest = document.implementation.createDocument(Namespaces.svgmf1, "");
-		dest.appendChild(dest.createElementNS(Namespaces.svg, "svg"));
-		dest.documentElement.setAttributeNS(Namespaces.xmlns, "xmlns:m", Namespaces.svgmf1);
-		dest.documentElement.replaceChildren(...source.documentElement.childNodes);
-
-		// Move namespace of elements without namespaces
-		const rootNamespace = dest.lookupNamespaceURI(null);
-		xpath(dest, "//*").filter(element => element.namespaceURI === null).forEach(element => {
-			if (element.namespaceURI === null) {
-				const copy = dest.createElementNS(rootNamespace, element.localName);
-				for (const attr of [...element.attributes]) {
-					element.removeAttributeNode(attr);
-					copy.setAttributeNode(attr);
-				}
-				element.replaceWith(copy);
+		// Fill derived values and remove all v:... attributes from the resulting SVG element(s)
+		for (const vAttr of vAttrs) {
+			if (this.#filterDef.derivations?.[vAttr.localName]) {
+				const value = this.#filterDef.derivations[vAttr.localName](fe.values ?? {});
+				vAttr.ownerElement?.setAttribute(vAttr.localName, value.toString());
 			}
-		});
+			vAttr.ownerElement?.removeAttributeNode(vAttr);
+		}
 
-		return dest;
+		return templateDoc.documentElement;
 	}
 }
+
