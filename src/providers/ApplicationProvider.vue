@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import StructuredDocumentProvider from "@/providers/StructuredDocumentProvider/StructuredDocumentProvider.vue";
+import ProjectProvider from "@/providers/ProjectProvider/ProjectProvider.vue";
 </script>
 
 <template>
-	<StructuredDocumentProvider>
+	<ProjectProvider>
 		<slot/>
-	</StructuredDocumentProvider>
+	</ProjectProvider>
 </template>
 
 <style scoped>

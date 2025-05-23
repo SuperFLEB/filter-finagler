@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
-import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
+import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
 import prettyXML from "@/util/prettyXML.ts";
 import {domToString} from "@/util/xml.ts";
 
-const {interface: intf, document: doc} = useStructuredDocumentProvider();
+const {interface: intf, project} = useProjectProvider();
 
 const includeMFMeta = ref<boolean>(false);
 const parsedString = computed(() => {
-	doc.value;
+	project.value;
 	return prettyXML(domToString(intf.toSvg(includeMFMeta.value)));
 });
 const parsedStringLines = computed(() => (parsedString.value ?? "").split("\n"));

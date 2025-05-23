@@ -1,0 +1,30 @@
+import {type FilterDef} from "@/MFilters/types.ts";
+import {numeric} from "@/util/numericParams.ts";
+
+const feMorphology = {
+	displayName: "Morphology",
+	author: "(SVG Native)",
+	appuid: "native:feMorphology",
+	interfaceFor: "feMorphology",
+	native: true,
+	version: [1, 0, 0],
+	template: `<fragment xmlns:v="vars"><feMorphology v:in="in" v:operator="operator" v:radius="radius" v:result="result" /></fragment>`,
+	contexts: ["//filter"],
+	inputs: {
+		in: {label: "Input"},
+	},
+	values: {
+		operator: {
+			type: "SELECT",
+			label: "Operator",
+			values: ["erode", "dilate"],
+			defaultValue: "erode"
+		},
+		radius: {type: "NUMBER", label: "Radius", ...numeric(0, 1, 100, 0.1)}
+	},
+	outputs: {
+		result: {label: "Result"}
+	}
+} as FilterDef;
+
+export default feMorphology;

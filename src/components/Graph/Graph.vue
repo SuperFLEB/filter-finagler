@@ -4,15 +4,15 @@ import {ConnectionMode, VueFlow} from "@vue-flow/core";
 import FilterElementNode from "@/components/Graph/Nodes/FilterElementNode.vue";
 import layout from "@/components/Graph/autoLayout.ts";
 import InputsNode from "@/components/Graph/Nodes/InputsNode.vue";
-import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
-import {toGraph} from "@/structuredDocument/export.ts";
+import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
+import {toGraph} from "@/Project/export.ts";
 
-const {document: doc} = useStructuredDocumentProvider();
+const {project} = useProjectProvider();
 
 const processed = computed(() => {
 
 	// TODO: Support multiple filters
-	const {nodes, edges} = toGraph(doc.value, "filter");
+	const {nodes, edges} = toGraph(project.value, "filter");
 
 	const nodesLayout = layout(
 		nodes,

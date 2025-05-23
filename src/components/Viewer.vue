@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import {computed} from "vue";
-import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
+import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
 import {domToString} from "@/util/xml.ts";
 import prettyXML from "@/util/prettyXML.ts";
 
-const {interface: intf, document: doc} = useStructuredDocumentProvider();
+const {interface: intf, project} = useProjectProvider();
 
 const svgText = computed(() => {
-	doc.value;
+	project.value;
 	return prettyXML(domToString(intf.toSvg()));
 });
 const svgUrl = computed(() => URL.createObjectURL(new Blob([svgText.value], { type: "image/svg+xml" })));

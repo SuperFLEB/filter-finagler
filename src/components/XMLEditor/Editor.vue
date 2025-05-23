@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from "vue";
 import EditorView from "@/components/XMLEditor/EditorView.vue";
-import useStructuredDocumentProvider from "@/providers/StructuredDocumentProvider/useStructuredDocumentProvider.ts";
+import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
 import prettyXML from "@/util/prettyXML.ts";
 import {domToString} from "@/util/xml";
 
-const {interface: intf, document: doc} = useStructuredDocumentProvider();
+const {interface: intf, project} = useProjectProvider();
 
 let currentEditorText: string = "";
 let editorUpdateFunction = (_: string) => {};
@@ -14,7 +14,7 @@ const editorDocumentText = ref<string>("");
 const isDirty = ref<boolean>(false);
 
 const svgText = computed(() => {
-	doc.value;
+	project.value;
 	const svgDoc = intf.export();
 	const text = domToString(svgDoc);
 	return prettyXML(text);

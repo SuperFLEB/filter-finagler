@@ -4,8 +4,8 @@ import {computed} from "vue";
 import {colord} from "colord";
 import objectMap from "@/util/objectMap.ts";
 import FilterIOHandle from "@/components/Graph/Nodes/FilterIOHandle.vue";
-import type {FilterElementType, SVGMFilterElement} from "@t/StructuredDocument.ts";
-import {getFilterDef} from "@/structuredDocument/info.ts";
+import type {FilterElementType, SVGMFilterElement} from "@/Project/ProjectModel.ts";
+import {getFilterDef} from "@/Project/info.ts";
 
 type Props = NodeProps<SVGMFilterElement>;
 const props = withDefaults(defineProps<Props>(), {});

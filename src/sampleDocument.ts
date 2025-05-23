@@ -1,4 +1,4 @@
-import type {MFilterFilter, SVGMFilterElement} from "@t/StructuredDocument.ts";
+import type {MFilterFilter, SVGMFilterElement} from "@/Project/ProjectModel.ts";
 import {Namespaces} from "@/constants.ts";
 
 const elements: SVGMFilterElement[] = [
