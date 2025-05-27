@@ -1,12 +1,12 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-const feDiffuseLighting = {
+const feDiffuseLighting: SVGFilterDef = {
 	displayName: "Diffuse Lighting",
 	author: "(SVG Native)",
 	appuid: "native:feDiffuseLighting",
 	interfaceFor: "feDiffuseLighting",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feDiffuseLighting v:in="in" v:surfaceScale="surfaceScale" v:diffuseConstant="diffuseConstant" v:kernelUnitLength="kernelUnitLength" v:lightingColor="lightingColor" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -22,6 +22,6 @@ const feDiffuseLighting = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feDiffuseLighting;

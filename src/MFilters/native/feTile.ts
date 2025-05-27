@@ -1,11 +1,11 @@
-import type {FilterDef} from "@/MFilters/types.ts";
+import type {SVGFilterDef} from "@/MFilters/types.ts";
 
-const feTile = {
+const feTile: SVGFilterDef = {
 	displayName: "Tile",
 	author: "(SVG Native)",
 	appuid: "native:feTile",
 	interfaceFor: "feTile",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feTile v:in="in" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -15,6 +15,6 @@ const feTile = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feTile;

@@ -9,6 +9,7 @@ import Splitter from "@/components/Splitter.vue";
 import Graph from "@/components/Graph/Graph.vue";
 import XMLViewer from "@/components/XMLViewer.vue";
 import {type CSSProperties, ref, shallowRef} from "vue";
+import FilterElementEditor from "@/components/FilterElementEditor.vue";
 
 const layoutRef = shallowRef<HTMLElement>();
 const layoutStyleRef = ref<CSSProperties>({});
@@ -16,6 +17,12 @@ const layoutStyleRef = ref<CSSProperties>({});
 const setSplit = (leftProportion: number = 0.5) => {
 	layoutStyleRef.value.gridTemplateColumns = `${percent(leftProportion)} min-content auto`;
 };
+
+const selected = ref<{ filter?: string, instanceId?: string }>({});
+
+function select({ filter, instanceId }: { filter?: string, instanceId?: string }): void {
+	selected.value = { filter, instanceId };
+}
 </script>
 
 <template>
@@ -23,7 +30,7 @@ const setSplit = (leftProportion: number = 0.5) => {
 		<ApplicationProvider>
 			<Tabs style="grid-area: nw">
 				<Tab id="graph" title="Builder">
-					<Graph class="visualizer"/>
+					<Graph class="visualizer" @graphNodeSelectionChange="select" />
 				</Tab>
 				<Tab id="xml" title="XML">
 					<Editor />
@@ -31,7 +38,7 @@ const setSplit = (leftProportion: number = 0.5) => {
 			</Tabs>
 			<Tabs style="grid-area: sw">
 				<Tab id="element" title="Element Editor">
-					(TBD)
+					<FilterElementEditor :filter="selected.filter" :selectedInstanceId="selected.instanceId" />
 				</Tab>
 			</Tabs>
 			<Splitter class="splitter" :onSplit="setSplit" :parent="layoutRef!" style="grid-area: splitter"/>

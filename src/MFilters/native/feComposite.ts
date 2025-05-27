@@ -1,12 +1,12 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-const feComposite = {
+const feComposite: SVGFilterDef = {
 	displayName: "Composite",
 	author: "(SVG Native)",
 	appuid: "native:feComposite",
 	interfaceFor: "feComposite",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feComposite v:in="in" v:in2="in2" v:operator="operator" v:k1="k1" v:k2="k2" v:k3="k3" v:k4="k4" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -29,6 +29,6 @@ const feComposite = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feComposite;

@@ -3,7 +3,8 @@ export const MFILTER_DEFS_TAG_NAME = "mdefs";
 export const MFILTER_DEF_TAG_NAME = "filter";
 
 export const Namespaces = Object.freeze({
-	svgmf1: "@superfleb/svg-mfilter-extensions/1.0",
+	svgmf: "@superfleb/svg-mfilter-extensions/1.0",
+	display: "@superfleb/svg-mfilter-extensions/1.0/display",
 
 	xml: "http://www.w3.org/XML/1998/namespace",
 	svg: "http://www.w3.org/2000/svg",
@@ -13,5 +14,6 @@ export const Namespaces = Object.freeze({
 	xsl: "http://www.w3.org/1999/XSL/Transform",
 	xmlns: "http://www.w3.org/2000/xmlns/"
 } as const);
+
 export type CommonNamespacePrefixes = keyof typeof Namespaces;
 

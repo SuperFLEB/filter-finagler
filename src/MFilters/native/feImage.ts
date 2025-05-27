@@ -1,11 +1,11 @@
-import type {FilterDef} from "@/MFilters/types.ts";
+import type {SVGFilterDef} from "@/MFilters/types.ts";
 
-const feImage = {
+const feImage: SVGFilterDef = {
 	displayName: "Image",
 	author: "(SVG Native)",
 	appuid: "native:feImage",
 	interfaceFor: "feImage",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feImage v:href="href" v:preserveAspectRatio="preserveAspectRatio" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -16,6 +16,6 @@ const feImage = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feImage;

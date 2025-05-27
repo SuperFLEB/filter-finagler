@@ -3,7 +3,7 @@ import {computed, onMounted, ref} from "vue";
 import EditorView from "@/components/XMLEditor/EditorView.vue";
 import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
 import prettyXML from "@/util/prettyXML.ts";
-import {domToString} from "@/util/xml";
+import {domToString, stringToDom} from "@/util/xml";
 
 const {interface: intf, project} = useProjectProvider();
 
@@ -30,10 +30,8 @@ function setEditorUpdateFunction(cb: () => void): void {
 }
 
 function applyEditor() {
-/*
-	updateText(currentEditorText);
-	editorDocumentText.value = currentEditorText;
-*/
+	const xmlDocument = stringToDom(currentEditorText);
+	intf.load(xmlDocument);
 }
 
 function applyDocument() {

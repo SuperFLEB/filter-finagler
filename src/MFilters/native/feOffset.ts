@@ -1,12 +1,12 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type FilterDef, type SVGFilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-const feOffset = {
+const feOffset: SVGFilterDef = {
 	displayName: "Offset",
 	author: "(SVG Native)",
 	appuid: "native:feOffset",
 	interfaceFor: "feOffset",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feOffset v:in="in" v:dx="dx" v:dy="dy" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -20,6 +20,6 @@ const feOffset = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feOffset;

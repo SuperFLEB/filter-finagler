@@ -1,12 +1,12 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type FilterDef, type SVGFilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-const feMorphology = {
+const feMorphology: SVGFilterDef = {
 	displayName: "Morphology",
 	author: "(SVG Native)",
 	appuid: "native:feMorphology",
 	interfaceFor: "feMorphology",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feMorphology v:in="in" v:operator="operator" v:radius="radius" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -25,6 +25,6 @@ const feMorphology = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feMorphology;

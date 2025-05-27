@@ -1,7 +1,8 @@
 import {type FilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-export default {
+const filterDef: FilterDef = {
+	type: "MFILTER",
 	displayName: "Unsharp Mask",
 	appuid: "@superfleb/mfilters/unsharpMask",
 	version: [1, 0, 0],
@@ -9,7 +10,7 @@ export default {
 	native: false,
 
 	template: `<fragment xmlns:v="vars">
-		<feGaussianBlur stdDeviation="4" v:in="in" result="blurred" />
+		<feGaussianBlur v:stdDeviation="radius" v:in="in" result="blurred" />
 		<feComponentTransfer in="blurred" result="blurredInverted">
 			<feFuncR type="linear" slope="-1" intercept="1"/>
 			<feFuncG type="linear" slope="-1" intercept="1"/>
@@ -45,4 +46,6 @@ export default {
 			label: "Result"
 		}
 	}
-} as FilterDef;
+};
+
+export default filterDef;

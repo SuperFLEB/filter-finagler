@@ -1,7 +1,8 @@
 import {type FilterDef} from "@/MFilters/types.ts";
 import average from "@/util/average.ts";
 
-export default {
+const filterDef: FilterDef = {
+	type: "MFILTER",
 	appuid: "@superfleb/mfilters/monotone",
 	displayName: "Monotone",
 	author: "Built-in",
@@ -71,4 +72,6 @@ export default {
 			label: "Result"
 		}
 	}
-} as FilterDef;
+};
+
+export default filterDef;

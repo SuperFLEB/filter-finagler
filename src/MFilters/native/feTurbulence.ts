@@ -1,12 +1,12 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-const feTurbulence = {
+const feTurbulence: SVGFilterDef = {
 	displayName: "Turbulence",
 	author: "(SVG Native)",
 	appuid: "native:feTurbulence",
 	interfaceFor: "feTurbulence",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feTurbulence v:type="type" v:baseFrequency="baseFrequency" v:numOctaves="numOctaves" v:seed="seed" v:stitchTiles="stitchTiles" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -30,6 +30,6 @@ const feTurbulence = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feTurbulence;

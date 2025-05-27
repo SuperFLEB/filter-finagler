@@ -1,12 +1,12 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-const feGaussianBlur = {
+const feGaussianBlur: SVGFilterDef = {
 	displayName: "Gaussian Blur",
 	appuid: "native:feGaussianBlur",
 	author: "(SVG Native)",
 	interfaceFor: "feGaussianBlur",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feGaussianBlur v:stdDeviation="stdDeviation" v:in="in" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -27,6 +27,6 @@ const feGaussianBlur = {
 			label: "Result"
 		}
 	}
-} as FilterDef;
+};
 
 export default feGaussianBlur;
