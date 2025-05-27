@@ -36,7 +36,6 @@
 		padding: 0;
 		margin: 0;
 	}
-
 	.handles {
 		font-size: .8em;
 
@@ -50,11 +49,9 @@
 			flex-basis: 50%;
 			flex-grow: 1;
 		}
-
 		.vue-flow__handle {
 			transform: none;
 			position: static;
 		}
-
 	}
 }

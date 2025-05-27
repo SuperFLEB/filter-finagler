@@ -15,9 +15,9 @@ import feOffset from "@/MFilters/native/feOffset.ts";
 import feSpecularLighting from "@/MFilters/native/feSpecularLighting.ts";
 import feTile from "@/MFilters/native/feTile.ts";
 import feTurbulence from "@/MFilters/native/feTurbulence.ts";
-import type {FilterDef} from "@/MFilters/types.ts";
+import type {SVGFilterDef} from "@/MFilters/types.ts";
 
-const nativeFilters = [
+const nativeFilters: SVGFilterDef[] = [
 	feBlend,
 	feColorMatrix,
 	feComponentTransfer,
@@ -37,14 +37,14 @@ const nativeFilters = [
 	feTurbulence,
 ];
 
-export default function getNativeFilters(): FilterDef[] {
+export default function getNativeFilters(): SVGFilterDef[] {
 	return [...nativeFilters];
 }
 
-export function getNativeFilterByTagName(tagName: string): FilterDef | undefined {
+export function getNativeFilterByTagName(tagName: string): SVGFilterDef | undefined {
 	return getNativeFilters().find(fd => fd?.interfaceFor === tagName);
 }
 
-export function getNativeFiltersByTagName(): Record<string, FilterDef> {
+export function getNativeFiltersByTagName(): Record<string, SVGFilterDef> {
 	return Object.fromEntries(getNativeFilters().filter(fd => fd.interfaceFor).map(fd => [fd.interfaceFor, fd]));
 }

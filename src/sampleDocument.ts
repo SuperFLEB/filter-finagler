@@ -1,14 +1,17 @@
-import type {MFilterFilter, SVGMFilterElement} from "@/Project/ProjectModel.ts";
+import type {FilterModel, FilterElement, FilterUtilityElement} from "@/Project/ProjectModel.ts";
 import {Namespaces} from "@/constants.ts";
 
-const elements: SVGMFilterElement[] = [
+const elements: FilterElement[] = [
 	{
-		instanceId: "1",
+		type: "MFILTER",
+		instanceId: "2",
 		appuid: "@superfleb/mfilters/unsharpMask",
 		version: [1, 0, 0],
-		type: "MFILTER",
 		inputs: {
-			in: "SourceGraphic"
+			in: {
+				outputName: "SourceGraphic",
+				outputInstanceId: null,
+			},
 		},
 		values: {
 			intensity: 3,
@@ -18,19 +21,19 @@ const elements: SVGMFilterElement[] = [
 			result: "unsharpmasked",
 		},
 		display: {
-			x: 0,
-			y: 0,
+			x: 200,
+			y: 30,
 		}
 	},
 	{
-		instanceId: "2",
-		type: "NATIVE",
+		instanceId: "3",
+		type: "SVGNATIVE",
 		nativeTag: "feColorMatrix",
 		appuid: "native:feColorMatrix",
 		inputs: {
 			in: {
 				outputName: "unsharpmasked",
-				outputInstanceId: "1",
+				outputInstanceId: "2",
 			},
 		},
 		values: {
@@ -39,22 +42,22 @@ const elements: SVGMFilterElement[] = [
 				 0, -1,  0,  0,  1,
 				 0,  0, -1,  0,  1,
 				 0,  0,  0,  1,  0,
-			]
+			],
 		},
 		outputs: {
-			result: "blurred",
+			result: "inverted",
 		},
 		display: {
-			x: 100,
-			y: 0,
+			x: 400,
+			y: 30,
 			displayName: "Color Invertotron",
 		}
-	},
+	}
 ];
 
 const sampleDocument = {
 	type: Namespaces.svg,
-	filters: new Map<string, MFilterFilter>([
+	filters: new Map<string, FilterModel>([
 		["filter", {
 			id: "filter",
 			elements,

@@ -1,12 +1,12 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-const feConvolveMatrix = {
+const feConvolveMatrix: SVGFilterDef = {
 	displayName: "Convolve Matrix",
 	author: "(SVG Native)",
 	appuid: "native:feConvolveMatrix",
 	interfaceFor: "feConvolveMatrix",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feConvolveMatrix v:in="in" v:order="order" v:kernelMatrix="kernelMatrix" v:divisor="divisor" v:bias="bias" v:targetX="targetX" v:targetY="targetY" v:edgeMode="edgeMode" v:preserveAlpha="preserveAlpha" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -36,6 +36,6 @@ const feConvolveMatrix = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feConvolveMatrix;

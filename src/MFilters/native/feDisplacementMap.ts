@@ -1,12 +1,12 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-const feDisplacementMap = {
+const feDisplacementMap: SVGFilterDef = {
 	displayName: "Displacement Map",
 	author: "(SVG Native)",
 	appuid: "native:feDisplacementMap",
 	interfaceFor: "feDisplacementMap",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feDisplacementMap v:in="in" v:in2="in2" v:scale="scale" v:xChannelSelector="xChannelSelector" v:yChannelSelector="yChannelSelector" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -32,6 +32,6 @@ const feDisplacementMap = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feDisplacementMap;

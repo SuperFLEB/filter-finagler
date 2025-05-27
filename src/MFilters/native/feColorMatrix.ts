@@ -1,7 +1,7 @@
-import type {FilterDef} from "@/MFilters/types.ts";
+import type {SVGFilterDef} from "@/MFilters/types.ts";
 
-const feColorMatrix = {
-	native: true,
+const feColorMatrix: SVGFilterDef = {
+	type: "SVGNATIVE",
 	interfaceFor: "feColorMatrix",
 
 	displayName: "Color Matrix",
@@ -28,6 +28,6 @@ const feColorMatrix = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feColorMatrix;

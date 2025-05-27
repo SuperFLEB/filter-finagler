@@ -1,4 +1,4 @@
-import type {SVGMFilterElement} from "@/Project/ProjectModel.ts";
+import type {FilterElement} from "@/Project/ProjectModel.ts";
 import type {FilterDef} from "@/MFilters/types.ts";
 import xpath from "@/util/xpath.ts";
 import setIntersect from "@/util/setIntersect.ts";
@@ -27,13 +27,13 @@ export default class MFilter {
 		this.#template = templateDocument;
 	}
 
-	fillTemplate(fe: SVGMFilterElement, includeMFMeta: boolean): Element {
+	fillTemplate(fe: FilterElement, includeMFMeta: boolean): Element {
 		const templateDoc = this.#template.cloneNode(true) as XMLDocument;
-		if (includeMFMeta) templateDoc.documentElement.setAttributeNS(Namespaces.xmlns, `xmlns:m`, Namespaces.svgmf1);
+		if (includeMFMeta) templateDoc.documentElement.setAttributeNS(Namespaces.xmlns, `xmlns:m`, Namespaces.svgmf);
 
 		if (includeMFMeta) {
 			xpath(templateDoc, "//*").forEach(element => {
-				element.setAttributeNS(Namespaces.svgmf1, "m:instance", fe.instanceId);
+				element.setAttributeNS(Namespaces.svgmf, "m:instance", fe.instanceId);
 			});
 		}
 
@@ -57,25 +57,25 @@ export default class MFilter {
 
 			// Fill outputs
 			if (vAttr.localName === "result" && this.#filterDef.outputs?.[vAttr.value]) {
-				attrValue = fe.outputs?.[vAttr.value] ?? "";
+				attrValue = getOutputRef(fe.outputs?.[vAttr.value] ?? "", fe.instanceId);
 			}
 
 			// Fill inputs
 			if (this.#filterDef.inputs?.[vAttr.value]) {
 				const input = fe.inputs?.[vAttr.value];
-				if (!input || typeof input === "string") {
-					attrValue = input ?? undefined;
+				if (!input || input.outputInstanceId === null) {
+					attrValue = input?.outputName ?? "";
 				} else {
 					attrValue = getOutputRef(input.outputName, input.outputInstanceId);
 				}
 			}
 
 			// Fill values
-			if (this.#filterDef.values?.[vAttr.value]) attrValue = normalizeAttr(fe.values?.[vAttr.value]) ?? undefined;
+			if (this.#filterDef.values?.[vAttr.value]) attrValue = normalizeAttr(fe.values?.[vAttr.value]) ?? this.#filterDef.values?.[vAttr.value]?.defaultValue ?? undefined;
 
-			if (attrValue === undefined) {
-				console.warn(`Undefined variable "${vAttr.value}" referenced in "${name}"`);
-			} else if (attrValue !== null) {
+			if (attrValue === undefined && !this.#filterDef.derivations?.[vAttr.value]) {
+				console.warn(`Variable "${vAttr.value}" was referenced in "<${vAttr.ownerElement!.localName} ... ${vAttr.name}="${vAttr.value}">" in "${this.#filterDef.displayName}" (${this.#filterDef.appuid}) template, but a value was not provided in instance "${fe.instanceId}" and there was no defaultValue.`);
+			} else if (attrValue !== undefined) {
 				vAttr.ownerElement?.setAttribute(vAttr.localName, attrValue.toString());
 			}
 		}
@@ -92,4 +92,3 @@ export default class MFilter {
 		return templateDoc.documentElement;
 	}
 }
-

@@ -1,12 +1,12 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-const feSpecularLighting = {
+const feSpecularLighting: SVGFilterDef = {
 	displayName: "Specular Lighting",
 	author: "(SVG Native)",
 	appuid: "native:feSpecularLighting",
 	interfaceFor: "feSpecularLighting",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feSpecularLighting v:in="in" v:surfaceScale="surfaceScale" v:specularConstant="specularConstant" v:specularExponent="specularExponent" v:kernelUnitLength="kernelUnitLength" v:lightingColor="lightingColor" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -23,6 +23,6 @@ const feSpecularLighting = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feSpecularLighting;

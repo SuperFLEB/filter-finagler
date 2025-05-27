@@ -1,4 +1,4 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilters/types.ts";
 import objectMap from "@/util/objectMap.ts";
 import {numeric} from "@/util/numericParams.ts";
 
@@ -43,11 +43,11 @@ const funcVars = ["R", "G", "B", "A"].map(
 	}, (([name, def]) => [name + component, def]))
 ).reduce((accum, component) => ({...accum, ...component}), {});
 
-const feComponentTransfer: FilterDef = {
+const feComponentTransfer: SVGFilterDef = {
 	displayName: "Component Transfer",
 	author: "(SVG Native)",
 	appuid: "native:feComponentTransfer",
-	native: true,
+	type: "SVGNATIVE",
 	interfaceFor: "feComponentTransfer",
 	version: [1, 0, 0],
 	template: `

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import type {NodeProps} from "@vue-flow/core";
+import {type NodeProps} from "@vue-flow/core";
 import {computed} from "vue";
 import {colord} from "colord";
 import objectMap from "@/util/objectMap.ts";
 import FilterIOHandle from "@/components/Graph/Nodes/FilterIOHandle.vue";
-import type {FilterElementType, SVGMFilterElement} from "@/Project/ProjectModel.ts";
+import type {NodeType, FilterElement} from "@/Project/ProjectModel.ts";
 import {getFilterDef} from "@/Project/info.ts";
 
-type Props = NodeProps<SVGMFilterElement>;
+type Props = NodeProps<FilterElement>;
 const props = withDefaults(defineProps<Props>(), {});
 
-type DisplayIO = { label: string; };
+type DisplayIO = { name: string, label: string; };
 
 defineOptions({
 	inheritAttrs: false
@@ -39,13 +39,14 @@ const display = computed(() => {
 		instanceId: filterElement.instanceId,
 	} as DisplayProps;
 
-	const colors: Record<FilterElementType, [string, string]> = {
+	const colors: Record<NodeType, [string, string]> = {
 		MFILTER: ["#374", "#fff"],
-		NATIVE: ["#c82", "#fff"],
+		SVGNATIVE: ["#c82", "#fff"],
 		UNKNOWN: ["#faa", "#000"],
+		UTILITY: ["#000", "#fff"],
 	};
 
-	const [bgColor, fgColor] = colors[filterElement.type ?? "UNKNOWN"];
+	const [bgColor, fgColor] = colors[filterElement.type ?? "UNKNOWN"] ?? colors.UNKNOWN;
 	const bgSelected = props.selected ? colord(bgColor).lighten(0.1).toRgbString() : bgColor;
 
 	displayProps.colors = [bgSelected, fgColor];
@@ -54,8 +55,8 @@ const display = computed(() => {
 	displayProps.inputs = {};
 	displayProps.outputs = {};
 
-	displayProps.inputs = objectMap(filterDef.inputs ?? {}, ([k, v]) => [k, {label: v?.label ?? k}]);
-	displayProps.outputs = filterDef.outputs ?? {};
+	displayProps.inputs = objectMap(filterDef.inputs ?? {}, ([k, v]) => [k, {name: k, label: v?.label ?? k}]);
+	displayProps.outputs = objectMap(filterDef.outputs ?? {}, ([k, v]) => [k, { name: filterElement.outputs?.[k] ?? k, label: v.label } ]);
 
 	displayProps.displayType = filterDef.displayName;
 	return displayProps;
@@ -84,8 +85,8 @@ const display = computed(() => {
 			</div>
 			<div class="outputHandles">
 				<FilterIOHandle v-for="(dio, keyName, index) in display.outputs" :key="index" direction="out"
-								:attribute="keyName" :nodeId="display.instanceId">
-					{{ dio.label ?? keyName }}
+								:attribute="dio.name" :nodeId="display.instanceId">
+					{{ dio.label ?? dio.name }}
 				</FilterIOHandle>
 			</div>
 		</div>

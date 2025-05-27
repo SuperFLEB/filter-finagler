@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import App from './components/App.vue'
-import registerInterpreters from "./mFilters.ts";
+import registerMFilters from "./mFilters.ts";
+import registerRequiredMFilters from "@/MFilters/required.ts";
 
-registerInterpreters();
+registerMFilters();
+registerRequiredMFilters();
 createApp(App).mount('#app')

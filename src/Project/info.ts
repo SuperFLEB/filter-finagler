@@ -1,7 +1,6 @@
-import type {SVGMFilterElement} from "@/Project/ProjectModel.ts";
+import type {FilterElement} from "@/Project/ProjectModel.ts";
 import {getFilterById} from "@/util/RegisterMFilter.ts";
 
-export function getFilterDef(fe: SVGMFilterElement) {
-	const appuid = fe.appuid;
-	return getFilterById(appuid);
+export function getFilterDef(fe: FilterElement) {
+	return getFilterById(fe.appuid);
 }

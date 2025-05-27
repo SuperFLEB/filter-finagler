@@ -26,10 +26,9 @@ export function parseOutputRef(outputRef: string) {
 	return unescapeSplit(outputRef, "@", "\\", 1);
 }
 
-export function getOutputRef(targetOutputName: string, targetInstanceId: string) {
-	const escaped = [
-		targetOutputName.replaceAll("\\", "\\\\").replaceAll("@", "\\@"),
-		targetInstanceId.replaceAll("\\", "\\\\").replaceAll("@", "\\@")
-	];
-	return escaped.join("@");
+export function getOutputRef(targetOutputName: string, targetInstanceId: string | null) {
+	const escapedName = targetOutputName.replaceAll("\\", "\\\\").replaceAll("@", "\\@");
+	if (targetInstanceId === null) return escapedName;
+	const escapedInstanceId = targetInstanceId.replaceAll("\\", "\\\\").replaceAll("@", "\\@")
+	return `${escapedName}@${escapedInstanceId}`;
 }

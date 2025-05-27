@@ -1,12 +1,12 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilters/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
-const feDropShadow = {
+const feDropShadow: SVGFilterDef = {
 	displayName: "Drop Shadow",
 	author: "(SVG Native)",
 	appuid: "native:feDropShadow",
 	interfaceFor: "feDropShadow",
-	native: true,
+	type: "SVGNATIVE",
 	version: [1, 0, 0],
 	template: `<fragment xmlns:v="vars"><feDropShadow v:dx="dx" v:dy="dy" v:stdDeviation="stdDeviation" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
@@ -21,6 +21,6 @@ const feDropShadow = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feDropShadow;

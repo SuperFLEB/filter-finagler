@@ -1,7 +1,7 @@
-import type {FilterDef} from "@/MFilters/types.ts";
+import type {SVGFilterDef} from "@/MFilters/types.ts";
 
-const feBlend = {
-	native: true,
+const feBlend: SVGFilterDef = {
+	type: "SVGNATIVE",
 	interfaceFor: "feBlend",
 
 	displayName: "Blend",
@@ -28,6 +28,6 @@ const feBlend = {
 	outputs: {
 		result: {label: "Result"}
 	}
-} as FilterDef;
+};
 
 export default feBlend;
