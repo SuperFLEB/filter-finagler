@@ -1,4 +1,4 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type FilterDef} from "@/MFilter/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
 const filterDef: FilterDef = {

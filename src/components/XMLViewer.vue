@@ -6,22 +6,26 @@ import {domToString} from "@/util/xml.ts";
 
 const {interface: intf, project} = useProjectProvider();
 
-const includeMFMeta = ref<boolean>(false);
+const format = ref<"svg"|"ff.svg"|"ff.xml">("svg");
 const parsedString = computed(() => {
 	project.value;
-	return prettyXML(domToString(intf.toSvg(includeMFMeta.value)));
+	return prettyXML(domToString(intf.export(format.value)));
 });
 const parsedStringLines = computed(() => (parsedString.value ?? "").split("\n"));
 
-function toggleMFMeta(e: InputEvent) {
-	includeMFMeta.value = (e.target as HTMLInputElement).checked;
+function setFormat(e: Event) {
+	format.value = (e.target as HTMLInputElement).value as "svg"|"ff.svg"|"ff.xml";
 }
 </script>
 
 <template>
 	<div class="viewer">
 		<div class="options">
-			<label><input type="checkbox" :checked="includeMFMeta" @input="toggleMFMeta($event as InputEvent)" /> Retain Edit Ability (MFilter metadata)</label>
+			<select @change="setFormat">
+				<option value="svg">SVG</option>
+				<option value="ff.svg">SVG+FF</option>
+				<option value="ff.xml">FF Filter</option>
+			</select>
 		</div>
 		<div class="lines">
 			<template v-for="line, idx in parsedStringLines">

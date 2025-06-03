@@ -1,8 +1,8 @@
-import {type SVGFilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilter/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
 const feFlood: SVGFilterDef = {
-	displayName: "Flood",
+	displayName: "Flood Fill",
 	author: "(SVG Native)",
 	appuid: "native:feFlood",
 	interfaceFor: "feFlood",
@@ -11,7 +11,7 @@ const feFlood: SVGFilterDef = {
 	template: `<fragment xmlns:v="vars"><feFlood v:flood-color="floodColor" v:flood-opacity="floodOpacity" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
 	values: {
-		floodColor: {type: "STRING", label: "Flood Color"},
+		floodColor: {type: "COLOR", label: "Flood Color"},
 		floodOpacity: {type: "NUMBER", label: "Flood Opacity", ...numeric(0, 1, 1, 0.01)}
 	},
 	outputs: {

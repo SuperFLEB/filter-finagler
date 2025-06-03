@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type {FilterElement} from "@/Project/ProjectModel.ts";
-import {getFilterDef} from "@/Project/info.ts";
+import type {FilterElement} from "@/ProjectModel/ProjectModel.ts";
+import {getFilterDef} from "@/ProjectModel/info.ts";
 import {computed} from "vue";
 import useInputUI from "@/providers/InputUIProvider/useInputUI.ts";
 

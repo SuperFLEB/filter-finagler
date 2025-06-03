@@ -59,13 +59,13 @@ export type InputValueDef<T extends keyof InputTypeMap = keyof InputTypeMap> = {
 	label?: string;
 	type: T;
 } & (
-	({ type: "NUMBER", defaultValue?: number | null | undefined } & Clamps<number>) |
-	({ type: "TABLE" | "MATRIX", defaultValue?: number[] | null | undefined } & Clamps<number>) |
-	({ type: "COLOR" | "STRING", defaultValue?: string | null | undefined } & Clamps<never>) |
+	({ type: "NUMBER", defaultValue?: number| undefined } & Clamps<number>) |
+	({ type: "TABLE" | "MATRIX", defaultValue?: number[] | undefined } & Clamps<number>) |
+	({ type: "COLOR" | "STRING", defaultValue?: string | undefined } & Clamps<never>) |
 	({
 		type: "SELECT",
 		values: string[],
-		defaultValue?: string | null | undefined,
+		defaultValue?: string | undefined,
 	} & Clamps<never>)
 );
 
@@ -88,7 +88,6 @@ type AnyNodeDef = {
 	appuid: string;
 	version: SemverArray;
 
-	native?: boolean;
 	interfaceFor?: string;
 
 	template?: string;

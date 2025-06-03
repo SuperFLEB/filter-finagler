@@ -4,13 +4,17 @@ import {computed} from "vue";
 import {colord} from "colord";
 import objectMap from "@/util/objectMap.ts";
 import FilterIOHandle from "@/components/Graph/Nodes/FilterIOHandle.vue";
-import type {NodeType, FilterElement} from "@/Project/ProjectModel.ts";
-import {getFilterDef} from "@/Project/info.ts";
+import type {NodeType, FilterElement} from "@/ProjectModel/ProjectModel.ts";
+import {getFilterDef} from "@/ProjectModel/info.ts";
+import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
 
 type Props = NodeProps<FilterElement>;
 const props = withDefaults(defineProps<Props>(), {});
 
-type DisplayIO = { name: string, label: string; };
+const { connected: connectedFes } = useProjectProvider();
+
+type DisplayIO = { id: string, label: string; };
+
 
 defineOptions({
 	inheritAttrs: false
@@ -26,6 +30,7 @@ type DisplayProps = {
 	colorCssVars: Record<string, string>;
 	inputs: Record<string, DisplayIO>,
 	outputs: Record<string, DisplayIO>,
+	connected: boolean;
 };
 
 const display = computed(() => {
@@ -55,17 +60,18 @@ const display = computed(() => {
 	displayProps.inputs = {};
 	displayProps.outputs = {};
 
-	displayProps.inputs = objectMap(filterDef.inputs ?? {}, ([k, v]) => [k, {name: k, label: v?.label ?? k}]);
-	displayProps.outputs = objectMap(filterDef.outputs ?? {}, ([k, v]) => [k, { name: filterElement.outputs?.[k] ?? k, label: v.label } ]);
+	displayProps.inputs = objectMap(filterDef.inputs ?? {}, ([k, v]) => [k, {id: k, label: v?.label ?? k}]);
+	displayProps.outputs = objectMap(filterDef.outputs ?? {}, ([k, v]) => [k, { id: k, label: v.label } ]);
 
 	displayProps.displayType = filterDef.displayName;
+	displayProps.connected = !!connectedFes.value.get(props.data.instanceId);
 	return displayProps;
 });
 
 </script>
 
 <template>
-	<div :class="['filterNode', { 'selected': props.selected }]" :style="{ ...display.colorCssVars }">
+	<div :class="['filterNode', { 'selected': props.selected, disconnected: !display.connected }]" :style="{ ...display.colorCssVars }">
 		<h1 class="title">{{ display.displayType }}</h1>
 		<!--
 					<menu class="vis">
@@ -85,12 +91,12 @@ const display = computed(() => {
 			</div>
 			<div class="outputHandles">
 				<FilterIOHandle v-for="(dio, keyName, index) in display.outputs" :key="index" direction="out"
-								:attribute="dio.name" :nodeId="display.instanceId">
-					{{ dio.label ?? dio.name }}
+								:attribute="dio.id" :nodeId="display.instanceId">
+					{{ dio.label ?? dio.id }}
 				</FilterIOHandle>
 			</div>
 		</div>
 	</div>
 </template>
 
-<style scoped lang="scss" src="./node.scss"/>
+<style scoped lang="scss" src="../node.scss"/>

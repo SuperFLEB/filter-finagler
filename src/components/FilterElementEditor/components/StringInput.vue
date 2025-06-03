@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {FilterElement} from "@/Project/ProjectModel.ts";
+import type {FilterElement} from "@/ProjectModel/ProjectModel.ts";
 import useInputUI from "@/providers/InputUIProvider/useInputUI.ts";
 
 type Props = { label: string, stringValue: string, fe: FilterElement, property: string };

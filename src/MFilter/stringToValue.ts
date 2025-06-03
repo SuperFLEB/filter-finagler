@@ -1,12 +1,14 @@
-import type {InputTypeMap, InputTypeName, Value} from "@/MFilters/types.ts";
+import type {InputTypeMap, InputTypeName, Value} from "@/MFilter/types.ts";
+import {colord} from "colord";
 
 export default function stringToValue(str: string, type: InputTypeName): Value {
 	switch (type) {
 		case "STRING":
 		case "RESULT":
 		case "SELECT":
-		case "COLOR":
 			return str;
+		case "COLOR":
+			return colord(str).toRgbString();
 		case "NUMBER":
 			return Number(str);
 		case "MATRIX":

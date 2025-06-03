@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {type FilterDef, InputTypeStringMap, type Value} from "@/MFilters/types.ts";
+import {type FilterDef, InputTypeStringMap, type Value} from "@/MFilter/types.ts";
 import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
-import type {FilterElement} from "@/Project/ProjectModel.ts";
+import type {FilterElement} from "@/ProjectModel/ProjectModel.ts";
 import {computed, provide} from "vue";
-import {getFilterDef} from "@/Project/info.ts";
-import {update} from "@/Project/manipulate.ts";
-import stringToValue from "@/MFilters/stringToValue.ts";
+import {getFilterDef} from "@/ProjectModel/info.ts";
+import {update} from "@/ProjectModel/manipulate.ts";
+import stringToValue from "@/MFilter/stringToValue.ts";
 import k from "./keys.ts";
 
 type Props = { filter: string, instanceId: string };
@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<Props>(), {});
 
 const { project } = useProjectProvider();
 
-const filterElement= computed(() => project.value.filters.get(props.filter)?.elements.find(fe => fe.instanceId === props.instanceId));
+const filterElement= computed(() => project.value.filters.get(props.filter)?.elements.get(props.instanceId));
 const filterDef = computed(() => filterElement.value && getFilterDef(filterElement.value));
 
 const intf = {
@@ -27,7 +27,7 @@ const intf = {
 	},
 	updateValueFromString(name: string, value: string) {
 		const type = filterDef.value?.values?.[name].type;
-		if (!type) throw new Error(`Filter, definition, or type not found for ${name}`);
+		if (!type) throw new Error(`Filter, element definition, or type not found for ${name}`);
 		this.updateValue(name, stringToValue(value, type));
 	},
 	updateValue(name: string, value: Value) {

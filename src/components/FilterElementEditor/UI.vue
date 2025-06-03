@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type {Component} from "vue";
-import type {FilterElement} from "@/Project/ProjectModel.ts";
-import {getFilterDef} from "@/Project/info.ts";
-import DefaultUI from "@/components/UI/DefaultUI.vue";
+import type {FilterElement} from "@/ProjectModel/ProjectModel.ts";
+import {getFilterDef} from "@/ProjectModel/info.ts";
+import DefaultUI from "@/components/FilterElementEditor/DefaultUI.vue";
 import InputUIProvider from "@/providers/InputUIProvider/InputUIProvider.vue";
 type Props = { fe: FilterElement };
 const props = withDefaults(defineProps<Props>(), {});

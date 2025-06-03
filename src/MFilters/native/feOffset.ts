@@ -1,4 +1,4 @@
-import {type FilterDef, type SVGFilterDef} from "@/MFilters/types.ts";
+import {type SVGFilterDef} from "@/MFilter/types.ts";
 import {numeric} from "@/util/numericParams.ts";
 
 const feOffset: SVGFilterDef = {

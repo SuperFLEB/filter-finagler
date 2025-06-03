@@ -1,4 +1,4 @@
-import type {SVGFilterDef} from "@/MFilters/types.ts";
+import type {SVGFilterDef} from "@/MFilter/types.ts";
 
 const feMerge: SVGFilterDef = {
 	displayName: "Merge",

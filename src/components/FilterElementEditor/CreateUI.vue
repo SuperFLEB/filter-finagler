@@ -1,0 +1,53 @@
+<script setup lang="ts">
+import {getFilters} from "@/util/RegisterMFilter.ts";
+import type {FilterDef, MFilterDef, SVGFilterDef} from "@/MFilter/types.ts";
+import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
+import {ref} from "vue";
+import useApplication from "@/providers/ApplicationProvider/useApplication.ts";
+
+type Props = { addMode?: boolean };
+const props = withDefaults(defineProps<Props>(), {addMode: false});
+
+const { interface: applicationInterface, graphAdd } = useApplication();
+
+const filters = getFilters();
+const mFilters: MFilterDef[] = [];
+const svgFilters: SVGFilterDef[] = [];
+
+for (const filter of filters) {
+	switch (filter.type) {
+		case "MFILTER":
+			mFilters.push(filter);
+			continue;
+		case "SVGNATIVE":
+			svgFilters.push(filter);
+			continue;
+	}
+}
+
+function addMode(filterDef: FilterDef) {
+	applicationInterface.graphAddMode(filterDef);
+}
+</script>
+
+<template>
+	<h1>Add Filter Element</h1>
+	<section class="mfilter">
+		<ul class="filterList">
+			<li v-for="filter in mFilters" :key="filter.appuid">
+				<button type="button" @click="addMode(filter)">{{ filter.displayName }}</button>
+			</li>
+		</ul>
+	</section>
+
+	<section class="native">
+		<ul class="filterList">
+			<li v-for="filter in svgFilters" :key="filter.appuid">
+				<button type="button" @click="addMode(filter)">{{ filter.displayName }}</button>
+			</li>
+		</ul>
+	</section>
+</template>
+<style scoped>
+
+</style>

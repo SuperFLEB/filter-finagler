@@ -1,5 +1,5 @@
 import {Namespaces} from "@/constants.ts";
-import type {FilterAttributeValues, NodeType, SemverArray} from "@/MFilters/types.ts";
+import type {FilterAttributeValues, NodeType, SemverArray} from "@/MFilter/types.ts";
 
 export type DisplayProperties = {
 	x?: number;
@@ -8,7 +8,7 @@ export type DisplayProperties = {
 };
 
 export type FilterInputReference = {
-	outputName: string;
+	outputId: string;
 	outputInstanceId: string | null;
 };
 export type FilterInputReferences = Record<string, FilterInputReference>;
@@ -20,7 +20,6 @@ type AnyFilterElement = {
 	type: NodeType;
 	instanceId: string;
 	appuid?: string,
-	nativeTag?: string,
 	display?: DisplayProperties;
 	singleton?: boolean,
 	version?: SemverArray;
@@ -29,45 +28,32 @@ type AnyFilterElement = {
 	outputs?: FilterOutputReferences,
 }
 
-export type FeMFilterElement = AnyFilterElement & {
-	type: "MFILTER",
+export type FeElement = AnyFilterElement & {
+	type: "MFILTER" | "SVGNATIVE",
 	instanceId: string;
 	appuid: string,
-	nativeTag?: never,
-	singleton?: never,
-};
-
-export type FeTagElement = AnyFilterElement & {
-	type: "SVGNATIVE",
-	instanceId: string;
-	appuid: string,
-	nativeTag: string,
 	singleton?: never,
 };
 
 export type FeUnknownElement = AnyFilterElement & {
 	type: "UNKNOWN",
-	nativeTag?: string,
 	instanceId: string,
 	appuid?: string,
 	singleton?: never,
 }
-
-export type FeElement = FeMFilterElement | FeTagElement;
 
 export type FilterUtilityElement = AnyFilterElement & {
 	type: "UTILITY",
 	appuid: string,
 	instanceId: string;
 	singleton: boolean,
-	nativeTag?: never,
 };
 
 export type FilterElement = FeElement | FilterUtilityElement;
 
 export type FilterModel = {
 	id: string;
-	elements: FilterElement[];
+	elements: Map<string, FilterElement>;
 };
 
 export type ProjectModel = {

@@ -1,19 +1,17 @@
-import type {FilterElement, FilterUtilityElement, ProjectModel,} from "@/Project/ProjectModel.ts";
+import type {FilterElement, FilterUtilityElement, ProjectModel,} from "@/ProjectModel/ProjectModel.ts";
 import type {Edge, Node as FlowNode} from "@vue-flow/core";
 import {Position} from "@vue-flow/core";
 import {Namespaces} from "@/constants.ts";
-import MFilter from "@/MFilters/MFilter.ts";
+import MFilter from "@/MFilter/MFilter.ts";
 import {getFilterById} from "@/util/RegisterMFilter.ts";
 import {xmlNotate} from "./xmlNotate.ts";
-import {getOutputRef} from "@/Project/util.ts";
+import {makeOutputNodeRef} from "@/ProjectModel/util.ts";
 import namespace from "@/util/namespace.ts";
+import type {FilterDef} from "@/MFilter/types.ts";
+import SvgOutput from "@/MFilters/utility/SvgOutput.ts";
 import SvgInputs from "@/MFilters/utility/SvgInputs.ts";
-import type {FilterDef} from "@/MFilters/types.ts";
-
-function getNodeType(fe: FilterElement) {
-	if (fe.type === "SVGINPUTS") return "inputs";
-	return "filterElement";
-}
+import type {FEConnectionStatus} from "@/ProjectModel/validate.ts";
+import xpath from "@/util/xpath.ts";
 
 export function toGraph(project: ProjectModel, filterId: string = "filter"): { nodes: FlowNode[], edges: Edge[] } {
 	const filter = project.filters.get(filterId);
@@ -25,12 +23,13 @@ export function toGraph(project: ProjectModel, filterId: string = "filter"): { n
 	const filterElements = filter.elements ?? [];
 
 	const requiredUtilityNodes: Record<string, Partial<FilterUtilityElement> & { instanceId: string }> = {
-		[SvgInputs.appuid]: {singleton: true, instanceId: "AUTO:SVGINPUTS"}
+		[SvgInputs.appuid]: {singleton: true, instanceId: "AUTO:SVGINPUTS"},
+		[SvgOutput.appuid]: {singleton: true, instanceId: "AUTO:SVGOUTPUT"},
 	};
 
 	for (const [appuid, defaults] of Object.entries(requiredUtilityNodes)) {
-		if (!(filterElements.length && filterElements.find(u => u.appuid === appuid))) {
-			filterElements.push({
+		if (!(filterElements.size && [...filterElements.values()].find(u => u.appuid === appuid))) {
+			filterElements.set(defaults.instanceId, {
 				type: "UTILITY",
 				singleton: defaults.singleton ?? true,
 				appuid,
@@ -43,14 +42,14 @@ export function toGraph(project: ProjectModel, filterId: string = "filter"): { n
 		}
 	}
 
-	const svgInputNode = filterElements.find(fe => fe.appuid === SvgInputs.appuid) as FilterUtilityElement;
+	const svgInputNode = [...filterElements.values()].find(fe => fe.appuid === SvgInputs.appuid) as FilterUtilityElement;
 
-	for (const fe of filterElements) {
+	for (const fe of filterElements.values()) {
 		const {x = 0, y = 0} = fe.display ?? {};
 
 		nodes.push({
 			id: fe.instanceId,
-			type: getNodeType(fe),
+			type: "filterElement",
 			data: {...fe},
 			position: {x, y},
 			sourcePosition: Position.Right,
@@ -63,8 +62,8 @@ export function toGraph(project: ProjectModel, filterId: string = "filter"): { n
 
 			const outputInstanceId = input.outputInstanceId ?? svgInputNode.instanceId;
 
-			const sourceHandle = getOutputRef(input.outputName, outputInstanceId);
-			const targetHandle = getOutputRef(name, fe.instanceId);
+			const sourceHandle = makeOutputNodeRef(input.outputId, outputInstanceId);
+			const targetHandle = makeOutputNodeRef(name, fe.instanceId);
 
 			edges.push({
 				source: outputInstanceId,
@@ -79,10 +78,11 @@ export function toGraph(project: ProjectModel, filterId: string = "filter"): { n
 	return {nodes, edges};
 }
 
-export function toSVGDoc(project: ProjectModel, filterName: string, includeMFMeta: boolean = false): XMLDocument {
-	const mfe = project.filters.get(filterName)?.elements;
+export function toSVGDoc(project: ProjectModel, filterName: string, validity?: FEConnectionStatus, includeMFMeta: boolean = false): XMLDocument {
+	const filter = project.filters.get(filterName);
+	const filterElements = filter?.elements;
 
-	if (!mfe) throw new Error(`Filter ${filterName} does not exist`);
+	if (!filterElements) throw new Error(`Filter ${filterName} does not exist`);
 
 	const svgDoc = document.implementation.createDocument(Namespaces.svg, "");
 	const svgElement = svgDoc.appendChild(document.createElementNS(Namespaces.svg, "svg"));
@@ -94,17 +94,16 @@ export function toSVGDoc(project: ProjectModel, filterName: string, includeMFMet
 
 	filterElement.setAttribute("id", filterName);
 
-	const domElements: Element[][] = mfe.map<Element[]>(fe => {
+	const domElements: Element[][] = [...filterElements.values()].map<Element[]>(fe => {
 		if (fe.type === "UTILITY") return [];
+		if (validity && !validity.get(fe.instanceId)) return [];
+
 		const filterDef = fe.appuid !== undefined && getFilterById(fe.appuid);
 		if (!filterDef) return [];
-		return Array.from(new MFilter(filterDef as FilterDef).fillTemplate(fe, includeMFMeta).children);
+		return Array.from(new MFilter(filterDef as FilterDef, filter).fillTemplate(fe, includeMFMeta).children);
 	});
 
 	filterElement.append(...domElements.flat(1));
-	if (includeMFMeta) {
-		xmlNotate(project, filterName, svgDoc);
-	}
 
 	return svgDoc;
 }
