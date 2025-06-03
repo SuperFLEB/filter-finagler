@@ -1,4 +1,4 @@
-import type {FilterDef, NodeDef, SVGFilterDef} from "@/MFilters/types.ts";
+import type {FilterDef, NodeDef, SVGFilterDef} from "@/MFilter/types.ts";
 
 const registry = new Map<string, NodeDef>;
 const nativeTagRegistry = new Map<string, SVGFilterDef>;

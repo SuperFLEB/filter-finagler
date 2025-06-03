@@ -1,4 +1,4 @@
-import {type FilterDef} from "@/MFilters/types.ts";
+import {type FilterDef} from "@/MFilter/types.ts";
 import average from "@/util/average.ts";
 
 const filterDef: FilterDef = {
@@ -9,7 +9,7 @@ const filterDef: FilterDef = {
 	version: [1, 0, 0],
 
 	template: `<fragment xmlns:v="vars">
-		<feColorMatrix type="matrix" v:in="in" v:values="matrix" />
+		<feColorMatrix type="matrix" v:in="in" v:values="matrix" v:result="result" />
 	</fragment>`,
 	contexts: ["//filter"],
 	inputs: {
@@ -20,15 +20,17 @@ const filterDef: FilterDef = {
 	values: {
 		ink: {
 			type: "COLOR",
-			label: "Color",
+			label: "Ink Color",
+			defaultValue: "#000",
 		},
 		paper: {
 			type: "COLOR",
-			label: "Color",
-			default: "#000",
+			label: "Paper Color",
+			defaultValue: "#fff",
 		},
 		mode: {
 			type: "SELECT",
+			label: "Mode",
 			values: ["add", "subtract", "auto"],
 			defaultValue: "auto",
 		}

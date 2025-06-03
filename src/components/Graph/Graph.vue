@@ -11,17 +11,19 @@ import {
 	VueFlow
 } from "@vue-flow/core";
 import FilterElementNode from "@/components/Graph/Nodes/FilterElementNode.vue";
-import SvgInputsNode from "@/components/Graph/Nodes/SVGInputsNode.vue";
 import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
-import {toGraph} from "@/Project/export.ts";
-import {parseOutputRef} from "@/Project/util.ts";
+import {toGraph} from "@/ProjectModel/export.ts";
+import {parseOutputRef} from "@/ProjectModel/util.ts";
+import useApplication from "@/providers/ApplicationProvider/useApplication.ts";
+import AddModeOverlay from "@/components/Graph/AddModeOverlay.vue";
+import type {FilterDef} from "@/MFilter/types.ts";
 
 const emit = defineEmits<{
 	(e: "graphNodeSelectionChange", event: { filter?: string, instanceId?: string }): void
 }>();
 
-
 const {project, interface: projectInterface} = useProjectProvider();
+const {interface: applicationInterface, graphAdd} = useApplication();
 const {applyEdgeChanges, applyNodeChanges, findNode, getSelectedNodes} = useVueFlow();
 
 const processed = computed(() => {
@@ -34,7 +36,6 @@ const processed = computed(() => {
 
 const nodeTypes = {
 	filterElement: markRaw(FilterElementNode),
-	inputs: markRaw(SvgInputsNode),
 };
 
 function onEdgesChange(actions: EdgeChange[]) {
@@ -73,7 +74,7 @@ function onNodesChange(actions: NodeChange[]) {
 			case "position":
 				if (action.dragging === false) {
 					const node = findNode(action.id);
-					const { x = 0, y = 0 } = action.position ?? node?.computedPosition ?? {};
+					const {x = 0, y = 0} = action.position ?? node?.computedPosition ?? {};
 					if (node?.data?.type) projectInterface.reposition(node.data, {x, y});
 				}
 				etc.push(action);
@@ -97,10 +98,10 @@ function onNodesChange(actions: NodeChange[]) {
 	if (selectChanged) {
 		const selectedInstanceId = getSelectedNodes.value[0]?.data?.instanceId;
 		if (!(selectedInstanceId)) {
-			emit("graphNodeSelectionChange", { filter: "filter" });
+			emit("graphNodeSelectionChange", {filter: "filter"});
 			return;
 		}
-		emit("graphNodeSelectionChange", { filter: "filter", instanceId: selectedInstanceId });
+		emit("graphNodeSelectionChange", {filter: "filter", instanceId: selectedInstanceId});
 	}
 
 	applyNodeChanges(etc);
@@ -116,6 +117,11 @@ function connect(connection: Connection) {
 	projectInterface.connect(source[1], source[0], target[1], target[0]);
 }
 
+function place(filterDef: FilterDef, position: { x: number, y: number }) {
+	projectInterface.add(filterDef, position);
+	applicationInterface.graphAddMode(false);
+
+}
 </script>
 
 <template>
@@ -131,6 +137,7 @@ function connect(connection: Connection) {
 			@edges-change="onEdgesChange"
 			@connect="connect"
 		/>
+		<AddModeOverlay v-if="graphAdd" @place="place"/>
 	</div>
 </template>
 
@@ -138,10 +145,13 @@ function connect(connection: Connection) {
 @import '@vue-flow/core/dist/style.css';
 </style>
 <style module lang="scss" src="./vueFlowStyle.scss"/>
-
 <style scoped>
-.graph {
+.graph, .graphAddOverlay {
 	position: absolute;
 	inset: 0;
+}
+
+.graphAddOverlay {
+	background-color: rgba(255, 255, 255, 0.5);
 }
 </style>

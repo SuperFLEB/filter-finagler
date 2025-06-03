@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import type {FilterElement} from "@/Project/ProjectModel.ts";
+import type {FilterElement} from "@/ProjectModel/ProjectModel.ts";
 import {computed} from "vue";
-import {getFilterDef} from "@/Project/info.ts";
-import DefaultComponent from "@/components/UI/DefaultComponent.vue";
+import {getFilterDef} from "@/ProjectModel/info.ts";
+import DefaultComponent from "@/components/FilterElementEditor/DefaultComponent.vue";
 
 type Props = { fe: FilterElement };
 const props = withDefaults(defineProps<Props>(), {});
+
+const filterDef = computed(() => getFilterDef(props.fe));
 
 type ComponentProps = {
 	label?: string;
@@ -20,9 +22,9 @@ const properties = computed<ComponentProps[]>(() => {
 		return [];
 	}
 
-	return Object.keys(props.fe.values ?? {})
-		.map(name => ({
-			label: filterDef.values?.[name].label,
+	return Object.entries(filterDef.values ?? {})
+		.map(([name, fd]) => ({
+			label: fd.label,
 			fe: props.fe,
 			property: name,
 		}));
@@ -30,5 +32,7 @@ const properties = computed<ComponentProps[]>(() => {
 </script>
 
 <template>
+	<h1>{{ filterDef!.displayName }}</h1>
+	<p v-if="!properties.length">{{ filterDef!.displayName.charAt(0).toUpperCase() + filterDef!.displayName.slice(1) }} has no options that can be set.</p>
 	<DefaultComponent v-for="(property, index) in properties" :key="index" v-bind="{...property}" />
 </template>

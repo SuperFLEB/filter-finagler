@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {Handle, Position} from "@vue-flow/core";
-import {computed} from "vue";
-import {getOutputRef} from "@/Project/util.ts";
+import {getOutputRefName, makeOutputNodeRef} from "@/ProjectModel/util.ts";
 
 type Props = { direction: "in" | "out", attribute: string, nodeId: string, active?: boolean, top?: number };
 const props = withDefaults(defineProps<Props>(), {
@@ -9,7 +8,7 @@ const props = withDefaults(defineProps<Props>(), {
 	top: 0,
 });
 const isInput = props.direction === "in"
-const id = getOutputRef(props.attribute, props.nodeId);
+const id = makeOutputNodeRef(props.attribute, props.nodeId);
 </script>
 
 <template>

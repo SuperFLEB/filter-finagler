@@ -1,8 +1,8 @@
-import type {UtilityNodeDef} from "@/MFilters/types.ts";
+import type {UtilityNodeDef} from "@/MFilter/types.ts";
 
 const svgInputs: UtilityNodeDef = {
 	type: "UTILITY",
-	displayName: "SVG Inputs",
+	displayName: "SVG Filter Inputs",
 	author: "(Built-in)",
 	appuid: "@superfleb/mfilters/util/svginputs",
 	version: [1, 0, 0],

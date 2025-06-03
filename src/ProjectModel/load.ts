@@ -1,23 +1,9 @@
 import {Namespaces} from "@/constants.ts";
 import xpath from "@/util/xpath.ts";
-import type {
-	FeElement,
-	FeUnknownElement,
-	FilterElement,
-	FilterModel,
-	FilterUtilityElement
-} from "@/Project/ProjectModel.ts";
-import type {FilterDef, FilterInputValueDefs} from "@/MFilters/types.ts";
+import type {FeElement, FilterElement, FilterModel} from "@/ProjectModel/ProjectModel.ts";
 import {getFilterById} from "@/util/RegisterMFilter.ts";
-import objectMap from "@/util/objectMap.ts";
-import {getOutputRef, parseOutputRef} from "@/Project/util.ts";
-import SVGSource from "@t/SVGSource.ts";
-import stringToValue from "@/MFilters/stringToValue.ts";
-
-export function fromMFXMLText(xml: string) {
-	const xmlDocument = new DOMParser().parseFromString(xml, "text/xml");
-	return fromXMLDocument(xmlDocument);
-}
+import {parseOutputRef} from "@/ProjectModel/util.ts";
+import stringToValue from "@/MFilter/stringToValue.ts";
 
 function xmlFilterToProjectFilterElements(filterElement: Element) {
 	const instanceElements = xpath(filterElement, "//*[@m:instance]", {m: Namespaces.svgmf});
@@ -49,7 +35,9 @@ function xmlFilterToProjectFilterElements(filterElement: Element) {
 		definitiveElements.push(mfElements[0]);
 	}
 
-	return definitiveElements.map(parseFilterElement).filter(de => de !== null);
+	return new Map<string, FeElement>(
+		definitiveElements.map(parseFilterElement).filter(de => de !== null).map(de => [de?.instanceId, de])
+	);
 }
 
 function parseFilterElement(element: Element): FeElement | null {
@@ -70,11 +58,6 @@ function parseFilterElement(element: Element): FeElement | null {
 			"util": "UTILITY",
 			"fe": "MFILTER",
 		}[element.localName] ?? "UNKNOWN") as FilterElement["type"];
-	}
-
-
-	if (feElement.type === "SVGNATIVE") {
-		feElement.nativeTag = element.localName;
 	}
 
 	const inputs = filterDef.inputs ? Object.fromEntries(
@@ -135,7 +118,7 @@ export function fromMFXMLDocument(xmlDocument: XMLDocument) {
 			filters.map(filter => {
 					const id: string | null = filter.getAttribute("id");
 					if (id === null) return null;
-					const elements: FilterElement[] = xmlFilterToProjectFilterElements(filter);
+					const elements: Map<string, FilterElement> = xmlFilterToProjectFilterElements(filter);
 					return [id, { id, elements }] as [string, FilterModel];
 				}
 			).filter(f => f !== null)
