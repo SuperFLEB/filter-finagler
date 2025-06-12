@@ -59,7 +59,6 @@ function getParserErrorElement(xmlDoc: Document) {
 	if (!parsererror) return null;
 	if (!parserErrorLocation.path?.length) return parsererror;
 	const selector = parserErrorLocation.path.map(step => `${step.name}:nth-of-type(${step.index + 1})`).join(' > ');
-	console.log("Looking for error at ", selector);
 	return xmlDoc.querySelector(selector);
 }
 

@@ -4,12 +4,12 @@ import {Namespaces} from "@/constants.ts";
 type PrefixNSMap = Record<string, keyof typeof Namespaces>;
 
 /**
- * Add the given xmlns namespace prefixes to the element. Mutates the given element and returns nothing.
+ * Add the given xmlns namespace prefixes to the element. Mutates the given element and returns it.
  * @param element Element to add
  * @param prefixNsMap Object in the form { prefix: key, ... } with prefix being the prefix and key being the key from the Namespaces lookup.
  * @example namespace(theElement, { "svg": "svg", "m": "svgmf", "d": "display });
  */
-export default function namespace(element: Element, prefixNsMap: PrefixNSMap): Element {
+export default function xmlns(element: Element, prefixNsMap: PrefixNSMap): Element {
 	for (const [prefix, namespaceKey] of Object.entries(prefixNsMap)) {
 		element.setAttributeNS(Namespaces.xmlns, `xmlns:${prefix}`, Namespaces[namespaceKey]);
 	}

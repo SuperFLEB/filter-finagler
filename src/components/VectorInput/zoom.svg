@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" width="10" height="10" preserveAspectRatio="none">
+	<path class="view" id="in" d="M 5 0 v 10 M 0 5 h 10"/>
+	<path class="view" id="out" d="M 0 5 h 10"/>
+	<g class="view" id="grid">
+		<path class="gridLines" d="M 3 0 v 10 M 7 0 v 10 M 0 3 h 10 M 0 7 h 10" />
+		<circle cx="7" cy="7" r="2" fill="#000" />
+	</g>
+	<style>
+		.view {
+			display: none;
+		}
+		.view:target { display: block; }
+
+		path {
+			fill: none;
+			stroke: #000;
+			stroke-width: 3;
+			vector-effect: non-scaling-stroke;
+		}
+
+		path.gridLines {
+			stroke-width: 1;
+			stroke: #888;
+		}
+	</style>
+</svg>

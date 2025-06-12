@@ -14,8 +14,14 @@ const feOffset: SVGFilterDef = {
 		in: {label: "Input"},
 	},
 	values: {
-		dx: {type: "NUMBER", label: "dx", ...numeric(-500, 0, 500, 1)},
-		dy: {type: "NUMBER", label: "dy", ...numeric(-500, 0, 500, 1)}
+		distance: {type: "VECTOR", label: "Distance", defaultValue: [0, 0], clamps: [
+			numeric(-500, 0, 500, 1),
+			numeric(-500, 0, 500, 1),
+		]}
+	},
+	derivations: {
+		dx: (values) => values.distance[0],
+		dy: (values) => values.distance[1],
 	},
 	outputs: {
 		result: {label: "Result"}

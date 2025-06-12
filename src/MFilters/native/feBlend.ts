@@ -14,14 +14,14 @@ const feBlend: SVGFilterDef = {
 	contexts: ["//filter"],
 
 	inputs: {
-		in: { label: "Input" },
-		in2: { label: "Input 2" },
+		in: {label: "Input"},
+		in2: {label: "Input 2"},
 	},
 	values: {
 		mode: {
 			type: "SELECT",
 			label: "Blend Mode",
-			values: ["normal", "multiply", "screen", "darken", "lighten"],
+			values: ["normal", "multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "hard-light", "soft-light", "difference", "exclusion", "hue", "saturation", "color", "luminosity"],
 			defaultValue: "normal"
 		}
 	},

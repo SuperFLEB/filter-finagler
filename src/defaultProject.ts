@@ -26,16 +26,22 @@ const defaultProject = {
 						{
 							"instanceId": "1",
 							"type": "SVGNATIVE",
-							"appuid": "native:feFlood",
+							"appuid": "native:feOffset",
 							"display": {
 								"x": 200,
 								"y": 100
+							},
+							"inputs": {
+								in: {
+									outputId: "SourceGraphic",
+									outputInstanceId: null,
+								},
 							},
 							"outputs": {
 								"result": "result@1"
 							},
 							"values": {
-								"floodColor": "rgb(255, 112, 112)"
+								"distance": [0, 0]
 							}
 						}
 					],

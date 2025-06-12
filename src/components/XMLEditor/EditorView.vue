@@ -40,7 +40,6 @@ function documentUpdated(vu: ViewUpdate) {
 
 function updateDocument(is: string) {
 	if (view && is !== view.state.doc.toString()) {
-		console.log("Text update", is);
 		view.dispatch({ changes: [{ from: 0, to: view.state.doc.length, insert: is }] });
 	}
 }

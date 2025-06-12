@@ -11,12 +11,18 @@ const feDropShadow: SVGFilterDef = {
 	template: `<fragment xmlns:v="vars"><feDropShadow v:dx="dx" v:dy="dy" v:stdDeviation="stdDeviation" v:result="result" /></fragment>`,
 	contexts: ["//filter"],
 	inputs: {
-		in: { label: "Input" },
+		in: {label: "Input"},
 	},
 	values: {
-		dx: {type: "NUMBER", label: "dx", ...numeric(-500, 0, 500, 1)},
-		dy: {type: "NUMBER", label: "dy", ...numeric(-500, 0, 500, 1)},
+		distance: {type: "VECTOR", components: 2, label: "Distance", defaultValue: [0,0], clamps: [
+			numeric(-500, 0, 500, 1),
+			numeric(-500, 0, 500, 1)
+		]},
 		stdDeviation: {type: "NUMBER", label: "Blur Radius", ...numeric(0, 4, 50, 0.1)}
+	},
+	derivations: {
+		dx: (values) => values.distance[0],
+		dy: (values) => values.distance[1]
 	},
 	outputs: {
 		result: {label: "Result"}

@@ -25,6 +25,5 @@ function onInput(e: InputEvent) {
 </script>
 
 <template>
-	<label>{{ label }}: <input type="range" :min="range.min.toString()" :max="range.max.toString()" :step="range.step.toString()"
-							   :value="props.stringValue" @input="onInput"/> {{ props.stringValue }}</label>
+	<input type="range" :min="range.min.toString()" :max="range.max.toString()" :step="range.step.toString()" :value="props.stringValue" @input="onInput"/>
 </template>
