@@ -6,7 +6,7 @@ import MFilter from "@/MFilter/MFilter.ts";
 import {getFilterById} from "@/util/RegisterMFilter.ts";
 import {xmlNotate} from "./xmlNotate.ts";
 import {makeOutputNodeRef} from "@/ProjectModel/util.ts";
-import namespace from "@/util/namespace.ts";
+import xmlns from "@/util/xmlns.ts";
 import type {FilterDef} from "@/MFilter/types.ts";
 import SvgOutput from "@/MFilters/utility/SvgOutput.ts";
 import SvgInputs from "@/MFilters/utility/SvgInputs.ts";
@@ -87,7 +87,7 @@ export function toSVGDoc(project: ProjectModel, filterName: string, validity?: F
 	const svgDoc = document.implementation.createDocument(Namespaces.svg, "");
 	const svgElement = svgDoc.appendChild(document.createElementNS(Namespaces.svg, "svg"));
 
-	if (includeMFMeta) namespace(svgElement, {m: "svgmf", d: "display"});
+	if (includeMFMeta) xmlns(svgElement, {m: "svgmf", d: "display"});
 
 	const defsElement = svgElement.appendChild(document.createElementNS(Namespaces.svg, "defs"));
 	const filterElement = defsElement.appendChild(document.createElementNS(Namespaces.svg, "filter"));

@@ -139,7 +139,6 @@ function input(component: ColorComponentName, e: Event) {
 }
 
 function changeColor(changes: Partial<ColorValues>) {
-	console.log({changes});
 	let newColor: string = props.color;
 	let firstKey = Object.keys(changes)[0];
 	if ('rgb'.includes(firstKey)) newColor = colord({ ...colord(props.color).toRgb(), ...changes }).toHex();

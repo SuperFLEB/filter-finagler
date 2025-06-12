@@ -31,6 +31,7 @@ export const InputTypeStringMap = Object.freeze({
 	"RESULT": "string",
 	"COLOR": "string",
 	"NUMBER": "number",
+	"VECTOR": "number[]",
 	"MATRIX": "number[]",
 	"TABLE": "number[]",
 } as const);
@@ -59,9 +60,10 @@ export type InputValueDef<T extends keyof InputTypeMap = keyof InputTypeMap> = {
 	label?: string;
 	type: T;
 } & (
-	({ type: "NUMBER", defaultValue?: number| undefined } & Clamps<number>) |
-	({ type: "TABLE" | "MATRIX", defaultValue?: number[] | undefined } & Clamps<number>) |
-	({ type: "COLOR" | "STRING", defaultValue?: string | undefined } & Clamps<never>) |
+	({ type: "NUMBER", defaultValue?: number } & Clamps<number>) |
+	{ type: "VECTOR", defaultValue?: number[], components?: number, clamps: Clamps<number>[] } |
+	({ type: "TABLE" | "MATRIX", defaultValue?: number[] } & Clamps<number>) |
+	({ type: "COLOR" | "STRING", defaultValue?: string } & Clamps<never>) |
 	({
 		type: "SELECT",
 		values: string[],

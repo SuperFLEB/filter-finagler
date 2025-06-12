@@ -10,6 +10,7 @@ import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.t
 import NumberInput from "@/components/FilterElementEditor/components/NumberInput.vue";
 import SelectInput from "@/components/FilterElementEditor/components/SelectInput.vue";
 import ColorInput from "@/components/FilterElementEditor/components/ColorInput.vue";
+import VectorInput from "@/components/FilterElementEditor/components/VectorInput.vue";
 
 type Props = { fe: FilterElement, property: string, label?: string };
 const props = withDefaults(defineProps<Props>(), {});
@@ -26,11 +27,12 @@ const component = computed(() => {
 		"NUMBER": NumberInput,
 		"SELECT": SelectInput,
 		"COLOR": ColorInput,
+		"VECTOR": VectorInput,
 	};
 	return inputUIComponents[type.value ?? "STRING"] ?? inputUIComponents["STRING"];
 })
 </script>
 
 <template>
-	<component :is="component" :label="props.label" :string-value="currentValue.toString()" :fe="props.fe" :property="props.property" />
+	<component :is="component" :label="props.label" :stringValue="currentValue.toString()" :value="currentValue" :fe="props.fe" :property="props.property" />
 </template>

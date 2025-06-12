@@ -1,4 +1,4 @@
-import type {FilterDef, NodeDef, SVGFilterDef} from "@/MFilter/types.ts";
+import type {NodeDef, SVGFilterDef} from "@/MFilter/types.ts";
 
 const registry = new Map<string, NodeDef>;
 const nativeTagRegistry = new Map<string, SVGFilterDef>;
@@ -16,6 +16,6 @@ export function getFilterById(appuid: string): NodeDef | undefined {
 	return registry.get(appuid);
 }
 
-export function getFilters() {
+export function getFilters(): Iterator<NodeDef> {
 	return registry.values();
 }

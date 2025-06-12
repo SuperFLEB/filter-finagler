@@ -11,8 +11,10 @@ export default function stringToValue(str: string, type: InputTypeName): Value {
 			return colord(str).toRgbString();
 		case "NUMBER":
 			return Number(str);
-		case "MATRIX":
 		case "TABLE":
+		case "MATRIX":
+			return str.split(/[\s,]+/).map(n => Number(n));
+		case "VECTOR":
 			return str.split(/[\s,]+/).map(n => Number(n));
 	}
 }
