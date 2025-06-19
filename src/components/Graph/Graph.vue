@@ -65,10 +65,12 @@ function onNodesChange(actions: NodeChange[]) {
 	const removes = [];
 	const etc = [];
 	let selectChanged = false;
+	let selectedInstanceId = undefined;
 
 	for (const action of actions) {
 		switch (action.type) {
 			case "remove":
+				selectChanged = true;
 				removes.push(action);
 				break;
 			case "position":
@@ -81,6 +83,7 @@ function onNodesChange(actions: NodeChange[]) {
 				break;
 			case "select":
 				selectChanged = true;
+				selectedInstanceId = getSelectedNodes.value[0]?.data?.instanceId;
 				etc.push(action);
 				break;
 			default:
@@ -96,7 +99,6 @@ function onNodesChange(actions: NodeChange[]) {
 	}
 
 	if (selectChanged) {
-		const selectedInstanceId = getSelectedNodes.value[0]?.data?.instanceId;
 		if (!(selectedInstanceId)) {
 			emit("graphNodeSelectionChange", {filter: "filter"});
 			return;
