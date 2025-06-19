@@ -36,6 +36,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/helper-string-parser@npm:^7.27.1":
+  version: 7.27.1
+  resolution: "@babel/helper-string-parser@npm:7.27.1"
+  checksum: 10c0/8bda3448e07b5583727c103560bcf9c4c24b3c1051a4c516d4050ef69df37bb9a4734a585fe12725b8c2763de0a265aa1e909b485a4e3270b7cfd3e4dbe4b602
+  languageName: node
+  linkType: hard
+
 "@babel/helper-validator-identifier@npm:^7.25.9":
   version: 7.25.9
   resolution: "@babel/helper-validator-identifier@npm:7.25.9"
@@ -61,6 +68,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/parser@npm:^7.27.0":
+  version: 7.27.5
+  resolution: "@babel/parser@npm:7.27.5"
+  dependencies:
+    "@babel/types": "npm:^7.27.3"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: 10c0/f7faaebf21cc1f25d9ca8ac02c447ed38ef3460ea95be7ea760916dcf529476340d72a5a6010c6641d9ed9d12ad827c8424840277ec2295c5b082ba0f291220a
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.12.5":
   version: 7.27.4
   resolution: "@babel/runtime@npm:7.27.4"
@@ -75,6 +93,16 @@ __metadata:
     "@babel/helper-string-parser": "npm:^7.25.9"
     "@babel/helper-validator-identifier": "npm:^7.25.9"
   checksum: 10c0/999c56269ba00e5c57aa711fbe7ff071cd6990bafd1b978341ea7572cc78919986e2aa6ee51dacf4b6a7a6fa63ba4eb3f1a03cf55eee31b896a56d068b895964
+  languageName: node
+  linkType: hard
+
+"@babel/types@npm:^7.27.3":
+  version: 7.27.6
+  resolution: "@babel/types@npm:7.27.6"
+  dependencies:
+    "@babel/helper-string-parser": "npm:^7.27.1"
+    "@babel/helper-validator-identifier": "npm:^7.27.1"
+  checksum: 10c0/39d556be114f2a6d874ea25ad39826a9e3a0e98de0233ae6d932f6d09a4b222923a90a7274c635ed61f1ba49bbd345329226678800900ad1c8d11afabd573aaf
   languageName: node
   linkType: hard
 
@@ -840,6 +868,7 @@ __metadata:
     "@codemirror/view": "npm:^6.36.3"
     "@dagrejs/dagre": "npm:^1.1.4"
     "@superfleb/draggable": "npm:^0.1.5"
+    "@superfleb/vue-vector-dot": "npm:^0.0.3"
     "@types/node": "npm:^22.13.8"
     "@vitejs/plugin-vue": "npm:^5.2.1"
     "@vitest/browser": "npm:^3.2.1"
@@ -859,6 +888,16 @@ __metadata:
     xml-beautify: "npm:^1.2.3"
   languageName: unknown
   linkType: soft
+
+"@superfleb/vue-vector-dot@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@superfleb/vue-vector-dot@npm:0.0.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40superfleb%2Fvue-vector-dot%2F0.0.3%2F78f010f6006103c8491ba61f6e92f3f8001d3d2b"
+  dependencies:
+    vue: "npm:^3.5.13"
+    vue-sfc-transformer: "npm:^0.1.11"
+  checksum: 10c0/0252d6bbd7f02192f8fcca1bbe0ea94950bcb0392a1bb034c0ba88401f1abaf668df448afe17bb7a61a0a647da0da52e433a0b0eae830143656c9fe079f5b63b
+  languageName: node
+  linkType: hard
 
 "@testing-library/dom@npm:^10.4.0":
   version: 10.4.0
@@ -3581,6 +3620,19 @@ __metadata:
     vue-demi-fix: bin/vue-demi-fix.js
     vue-demi-switch: bin/vue-demi-switch.js
   checksum: 10c0/a9ed8712fa36d01bc13c39757f95f30cebf42d557b99e94bff86d8660c81f2911b41220f7affc023d1ffcc19e13999e4a83019991e264787cca2c616e83aea48
+  languageName: node
+  linkType: hard
+
+"vue-sfc-transformer@npm:^0.1.11":
+  version: 0.1.16
+  resolution: "vue-sfc-transformer@npm:0.1.16"
+  dependencies:
+    "@babel/parser": "npm:^7.27.0"
+  peerDependencies:
+    "@vue/compiler-core": ^3.5.13
+    esbuild: "*"
+    vue: ^3.5.13
+  checksum: 10c0/8764734403e6b971b5051d8068e2db7a51783af82e74dbe7651e94e90aaf8f69410dd612e12fb5a1dfc653873616146d5d1cb093164968c38292324c46c786d4
   languageName: node
   linkType: hard
 

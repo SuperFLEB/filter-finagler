@@ -28,7 +28,7 @@ const fe = computed<FilterElement | undefined>(() => {
 		<CreateUI v-else/>
 	</div>
 	<div v-else-if="!fe">
-		(Error goes here)
+		(There was an error loading the selected filter details.)
 	</div>
 	<div v-else>
 		<UI :fe/>
