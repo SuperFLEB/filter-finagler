@@ -16,11 +16,15 @@ const feGaussianBlur: SVGFilterDef = {
 		},
 	},
 	values: {
-		stdDeviation: {
-			type: "NUMBER",
+		radius: {
+			type: "VECTOR",
 			label: "Radius",
 			...numeric(0, 5, 10, 0.001, true),
+			defaultValue: [5, 5],
 		},
+	},
+	derivations: {
+		stdDeviation: values => values.radius.join(" ")
 	},
 	outputs: {
 		result: {

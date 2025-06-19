@@ -94,16 +94,36 @@ export function toSVGDoc(project: ProjectModel, filterName: string, validity?: F
 
 	filterElement.setAttribute("id", filterName);
 
-	const domElements: Element[][] = [...filterElements.values()].map<Element[]>(fe => {
-		if (fe.type === "UTILITY") return [];
-		if (validity && !validity.get(fe.instanceId)) return [];
+	const domElementsByInstanceId = new Map<string, Element[]>();
+
+	const filterElementsValues = filterElements.values();
+	let outputInstanceId: string | undefined = undefined;
+
+	for (const fe of filterElementsValues) {
+		if (fe.type === "UTILITY") {
+			if (fe.appuid === SvgOutput.appuid) {
+				outputInstanceId = fe.inputs?.sink?.outputInstanceId ?? undefined;
+			}
+			continue;
+		}
+		if (validity && !validity.get(fe.instanceId)) continue;
 
 		const filterDef = fe.appuid !== undefined && getFilterById(fe.appuid);
-		if (!filterDef) return [];
-		return Array.from(new MFilter(filterDef as FilterDef, filter).fillTemplate(fe, includeMFMeta).children);
-	});
+		if (!filterDef) continue;
 
-	filterElement.append(...domElements.flat(1));
+		domElementsByInstanceId.set(fe.instanceId, Array.from(new MFilter(filterDef as FilterDef, filter).fillTemplate(fe, includeMFMeta).children));
+	}
+
+	// Move the output-connected elements to the end of the SVG output, since that is what determines what shows
+	if (outputInstanceId) {
+		const outputConnectedElement = domElementsByInstanceId.get(outputInstanceId);
+		if (outputConnectedElement) {
+			domElementsByInstanceId.delete(outputInstanceId);
+			domElementsByInstanceId.set(outputInstanceId, outputConnectedElement);
+		}
+	}
+
+	filterElement.append(...Array.from(domElementsByInstanceId.values()).flat(1));
 
 	return svgDoc;
 }
