@@ -154,7 +154,7 @@ function changeColor(changes: Partial<ColorValues>) {
 			<defs>
 				<linearGradient v-for="(stops, axis, index) in gradients" :id="`${random}-gradient-${axis}`"
 								v-bind="{ ...(axis === 'y' && {gradientTransform: 'rotate(-90 .5 .5)'}) }">
-					<stop v-for="(stop, index) in stops" :offset="100 * index / (stops.length - 1) + '%'"
+					<stop v-for="(stop, index) in stops ?? []" :offset="100 * index / ((stops ?? []).length - 1) + '%'"
 						  :stop-color="stop"/>
 				</linearGradient>
 			</defs>

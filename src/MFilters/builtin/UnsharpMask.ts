@@ -7,7 +7,6 @@ const filterDef: FilterDef = {
 	appuid: "@superfleb/mfilters/unsharpMask",
 	version: [1, 0, 0],
 	author: "Built-in",
-	native: false,
 
 	template: `<fragment xmlns:v="vars">
 		<feGaussianBlur v:stdDeviation="radius" v:in="in" result="blurred" />

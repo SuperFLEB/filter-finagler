@@ -16,6 +16,6 @@ export function getFilterById(appuid: string): NodeDef | undefined {
 	return registry.get(appuid);
 }
 
-export function getFilters(): Iterator<NodeDef> {
+export function getFilters(): MapIterator<NodeDef> {
 	return registry.values();
 }

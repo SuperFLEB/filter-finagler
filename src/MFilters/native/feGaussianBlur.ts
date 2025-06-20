@@ -19,8 +19,11 @@ const feGaussianBlur: SVGFilterDef = {
 		radius: {
 			type: "VECTOR",
 			label: "Radius",
-			...numeric(0, 5, 10, 0.001, true),
 			defaultValue: [5, 5],
+			clamps: [
+				numeric(0, 5, 10, 0.001, true),
+				numeric(0, 5, 10, 0.001, true)
+			]
 		},
 	},
 	derivations: {

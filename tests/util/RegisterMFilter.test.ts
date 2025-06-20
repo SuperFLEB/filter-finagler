@@ -1,7 +1,8 @@
 import { vi, expect, describe, it } from "vitest";
 import {registerMFilter, getFilterById, getFilters} from "@/util/RegisterMFilter.ts";
+import type {NodeDef} from "@/MFilter/types.ts";
 
-const mFilterDef = {
+const mFilterDef: NodeDef = {
 	type: "MFILTER",
 	appuid: "mfilter",
 	displayName: "",
@@ -10,7 +11,7 @@ const mFilterDef = {
 	template: ""
 }
 
-const svgFilterDef = {
+const svgFilterDef: NodeDef = {
 	type: "SVGNATIVE",
 	appuid: "svgfilter",
 	interfaceFor: "",
@@ -20,7 +21,7 @@ const svgFilterDef = {
 	template: ""
 }
 
-const utilityFilterDef = {
+const utilityFilterDef: NodeDef = {
 	type: "UTILITY",
 	appuid: "utility",
 	displayName: "",

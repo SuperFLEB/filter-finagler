@@ -23,6 +23,7 @@ describe("objectMap", () => {
 	});
 	it("Throws whem mapping with filtering off and a null value is produced", () => {
 		const input: Record<string, number> = { a: 1000, b: 0 };
+		// @ts-ignore
 		expect(() => objectMap(input, ([name, num]) => num ? [name, num * 2] : null, false)).toThrowError();
 	});
 })

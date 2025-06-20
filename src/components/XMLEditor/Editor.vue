@@ -13,16 +13,16 @@ let editorUpdateFunction = (_: string) => {};
 const editorDocumentText = ref<string>("");
 const isDirty = ref<boolean>(false);
 
-const svgText = computed(() => {
+const ffText = computed(() => {
 	project.value;
-	const svgDoc = intf.export();
-	const text = domToString(svgDoc);
+	const ffDoc = intf.export("ff.xml");
+	const text = domToString(ffDoc);
 	return prettyXML(text);
 });
 
 function handleEditorUpdate(text: string): void {
 	currentEditorText = text;
-	isDirty.value = currentEditorText !== svgText.value;
+	isDirty.value = currentEditorText !== ffText.value;
 }
 
 function setEditorUpdateFunction(cb: () => void): void {
@@ -35,13 +35,13 @@ function applyEditor() {
 }
 
 function applyDocument() {
-	currentEditorText = svgText.value;
-	editorDocumentText.value = svgText.value;
+	currentEditorText = ffText.value;
+	editorDocumentText.value = ffText.value;
 	editorUpdateFunction(editorDocumentText.value);
 }
 
 onMounted(() => {
-	editorUpdateFunction(svgText.value);
+	editorUpdateFunction(ffText.value);
 });
 
 </script>

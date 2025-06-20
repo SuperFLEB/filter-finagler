@@ -1,67 +1,68 @@
-import type {FilterModel, FilterElement, FilterUtilityElement} from "@/ProjectModel/ProjectModel.ts";
+import type {FilterElement, FilterModel} from "@/ProjectModel/ProjectModel.ts";
 import {Namespaces} from "@/constants.ts";
+
 
 const defaultProject = {
 	type: Namespaces.svg,
 	filters: new Map<string, FilterModel>([
 		["filter", {
 			id: "filter",
-			elements: new Map(
+			elements: new Map<string, FilterElement>(
 				[
 					[
 						"AUTO:SVGINPUTS",
 						{
-							"instanceId": "AUTO:SVGINPUTS",
-							"type": "UTILITY",
-							"singleton": true,
-							"appuid": "@superfleb/mfilters/util/svginputs",
-							"display": {
-								"x": 0,
-								"y": 0
+							instanceId: "AUTO:SVGINPUTS",
+							type: "UTILITY",
+							singleton: true,
+							appuid: "@superfleb/mfilters/util/svginputs",
+							display: {
+								x: 0,
+								y: 0
 							},
 						}
 					],
 					[
 						"1",
 						{
-							"instanceId": "1",
-							"type": "SVGNATIVE",
-							"appuid": "native:feOffset",
-							"display": {
-								"x": 200,
-								"y": 100
+							instanceId: "1",
+							type: "SVGNATIVE",
+							appuid: "native:feOffset",
+							display: {
+								x: 200,
+								y: 100
 							},
-							"inputs": {
+							inputs: {
 								in: {
 									outputId: "SourceGraphic",
 									outputInstanceId: null,
 								},
 							},
-							"outputs": {
-								"result": "result@1"
+							outputs: {
+								result: "result@1"
 							},
-							"values": {
-								"distance": [0, 0]
+							values: {
+								distance: [0, 0]
 							}
 						}
 					],
 					[
 						"AUTO:SVGOUTPUT",
 						{
-							"instanceId": "AUTO:SVGOUTPUT",
-							"type": "UTILITY",
-							"singleton": true,
-							"appuid": "@superfleb/mfilters/util/svgoutputs",
-							"inputs": {
-								"sink": {
-									"outputId": "result",
-									"outputInstanceId": "1"
+							instanceId: "AUTO:SVGOUTPUT",
+							type: "UTILITY",
+							singleton: true,
+							appuid: "@superfleb/mfilters/util/svgoutputs",
+							inputs: {
+								sink: {
+									outputId: "result",
+									outputInstanceId: "1"
 								}
 							},
-							"display": {
-								"x": 500,
-								"y": 0
-							},
+							display: {
+								x: 500,
+								y: 0
+							}
 						}
 					]
 				],
