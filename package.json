@@ -31,7 +31,8 @@
   "devDependencies": {
     "@types/node": "^22.13.8",
     "@vitejs/plugin-vue": "^5.2.4",
-    "@vitest/browser": "^3.2.1",
+    "@vitest/browser": "^3.2.4",
+    "@vitest/ui": "3.2.4",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
     "jsdom": "^26.1.0",
