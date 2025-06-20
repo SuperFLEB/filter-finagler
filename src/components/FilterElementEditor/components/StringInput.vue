@@ -9,7 +9,7 @@ defineEmits(["update"]);
 
 const { interface: uiInterface } = useInputUI();
 
-function onInput(e: InputEvent) {
+function onInput(e: Event) {
 	const value = (e.target as HTMLInputElement).value;
 	uiInterface.updateValueFromString(props.property, value);
 }

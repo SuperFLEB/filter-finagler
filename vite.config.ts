@@ -1,12 +1,25 @@
 /// <reference types="vitest/config" />
-import {defineConfig} from "vite";
+
+import { defineConfig, mergeConfig } from 'vite';
 import vue from "@vitejs/plugin-vue";
 import * as path from "node:path";
 
 // https://vite.dev/config/
-export default defineConfig({
-	appType: "mpa", // disable history fallback
+const pluginsConfig = defineConfig({
 	plugins: [vue()],
+});
+
+const config = {
+	appType: "mpa", // disable history fallback
+	build: {
+		assetsInlineLimit: 0,
+	},
+	resolve: {
+		alias: [
+			{find: "@t", replacement: path.resolve(__dirname, "./src/types")},
+			{find: "@", replacement: path.resolve(__dirname, "./src")},
+		],
+	},
 	test: {
 		projects: [
 			{
@@ -36,23 +49,16 @@ export default defineConfig({
 						// https://vitest.dev/guide/browser/playwright
 						instances: [
 							{browser: "chromium"},
-/*
-							{browser: "firefox"},
-*/
+							/*
+														{browser: "firefox"},
+							*/
 						],
 						include: ["./tests/**/*.test.ts", "./tests/**/*.test.js"],
 					},
 				}
 			},
 		],
-	},
-	build: {
-		assetsInlineLimit: 0,
-	},
-	resolve: {
-		alias: [
-			{find: "@t", replacement: path.resolve(__dirname, "./src/types")},
-			{find: "@", replacement: path.resolve(__dirname, "./src")},
-		],
 	}
-});
+};
+
+export default mergeConfig(pluginsConfig, config);

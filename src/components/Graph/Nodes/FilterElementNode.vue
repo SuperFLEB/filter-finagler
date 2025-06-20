@@ -4,9 +4,10 @@ import {computed} from "vue";
 import {colord} from "colord";
 import objectMap from "@/util/objectMap.ts";
 import FilterIOHandle from "@/components/Graph/Nodes/FilterIOHandle.vue";
-import type {NodeType, FilterElement} from "@/ProjectModel/ProjectModel.ts";
+import type {FilterElement} from "@/ProjectModel/ProjectModel.ts";
 import {getFilterDef} from "@/ProjectModel/info.ts";
 import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
+import type {NodeType} from "@/MFilter/types.ts";
 
 type Props = NodeProps<FilterElement>;
 const props = withDefaults(defineProps<Props>(), {});

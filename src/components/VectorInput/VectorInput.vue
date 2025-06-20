@@ -126,7 +126,7 @@ const lineEndPos = computed(() => {
 const inDrag = ref<boolean>(false);
 const inPan = ref<boolean>(false);
 let dragAbort: AbortController;
-let mouseDownTimeout: number;
+let mouseDownTimeout: number | undefined = undefined;
 let panFrom = [0, 0];
 
 function dragEvents(move: (e: MouseEvent) => void, drop: (e: MouseEvent) => void) {
@@ -138,7 +138,7 @@ function dragEvents(move: (e: MouseEvent) => void, drop: (e: MouseEvent) => void
 function clearInDrag() {
 	setTimeout(() => {
 		inDrag.value = false;
-		clearTimeout(mouseDownTimeout);
+		if (mouseDownTimeout) clearTimeout(mouseDownTimeout);
 	}, 0);
 }
 
@@ -156,7 +156,7 @@ function panDragMove(e: MouseEvent) {
 		return;
 	}
 	const point = clientPointToPoint(e.clientX, e.clientY);
-	const delta: [number, number] = [point[0] - panFrom[0], point[1] - panFrom[1]].map(d => d / zoomLevel.value);
+	const delta = [point[0] - panFrom[0], point[1] - panFrom[1]].map(d => d / zoomLevel.value) as [number, number];
 	panFrom = point;
 	pan(...delta);
 }

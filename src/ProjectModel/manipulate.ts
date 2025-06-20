@@ -69,16 +69,14 @@ export function connect(project: ProjectModel, filterId: string, outputName: str
 		return project;
 	}
 
-	const outputAttrAndName =
-		(outFe.outputs && outFe.outputs[outputName]) ??
-		(outFilterDef.outputs && (outFilterDef.outputs[outputName]?.universal ||	 outputName));
+	const outputAttr = outFe.outputs?.[outputName] ?? outFilterDef?.outputs?.[outputName]?.universal ? outputName : undefined;
 
-	if (!outputAttrAndName) {
+	if (!outputAttr) {
 		console.error(`Could not find output for ${outputName}`);
 		return project;
 	}
 
-	const universal = !!outFilterDef.outputs?.[outputAttrAndName[1]]?.universal;
+	const universal = !!outFilterDef?.outputs?.[outputName]?.universal;
 
 	_connect(outputName, outFe, inputName, inFe, universal);
 	return project;

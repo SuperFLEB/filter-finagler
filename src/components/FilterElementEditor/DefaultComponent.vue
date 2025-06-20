@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import StringInput from "@/components/FilterElementEditor/components/StringInput.vue";
-import type {FilterElement, FilterInputReference} from "@/ProjectModel/ProjectModel.ts";
+import type {FilterElement} from "@/ProjectModel/ProjectModel.ts";
 import {type Component, computed} from "vue";
-import stringToValue from "@/MFilter/stringToValue.ts";
-import type {InputValueDef} from "@/MFilter/types.ts";
 import {getFilterDef} from "@/ProjectModel/info.ts";
-import {update} from "@/ProjectModel/manipulate.ts";
 import useProjectProvider from "@/providers/ProjectProvider/useProjectProvider.ts";
 import NumberInput from "@/components/FilterElementEditor/components/NumberInput.vue";
 import SelectInput from "@/components/FilterElementEditor/components/SelectInput.vue";
@@ -18,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {});
 const { project } = useProjectProvider();
 
 const filterDef = computed(() => getFilterDef(props.fe));
-const currentValue = computed(() => props.fe.values?.[props.property] ?? filterDef?.value.values?.[props.property]?.defaultValue ?? "");
+const currentValue = computed(() => props.fe.values?.[props.property] ?? filterDef?.value?.values?.[props.property]?.defaultValue ?? "");
 const type = computed(() => filterDef.value?.values?.[props.property]?.type);
 
 const component = computed(() => {

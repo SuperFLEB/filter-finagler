@@ -54,7 +54,7 @@ function onEdgesChange(actions: EdgeChange[]) {
 	applyEdgeChanges(etc);
 	for (const action of removes) {
 		const edge = processed.value.edges.find(e => e.id === action.id);
-		if (edge) {
+		if (edge?.targetHandle) {
 			const target = parseOutputRef(edge.targetHandle);
 			projectInterface.disconnect(target[1], target[0]);
 		}
