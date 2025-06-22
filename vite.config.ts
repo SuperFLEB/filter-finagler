@@ -7,6 +7,7 @@ import * as path from "node:path";
 
 const config = {
 	plugins: [versionPlugin(), vue()],
+	base: "./",
 	appType: "mpa", // disable history fallback
 	build: {
 		assetsInlineLimit: 0,

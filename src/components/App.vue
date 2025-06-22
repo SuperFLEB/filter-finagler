@@ -11,7 +11,6 @@ import XMLViewer from "@/components/XMLViewer.vue";
 import {type CSSProperties, ref, shallowRef} from "vue";
 import FilterElementEditor from "@/components/FilterElementEditor/FilterElementEditor.vue";
 import JSViewer from "@/components/JSViewer.vue";
-import version from "@superfleb/vite-plugin-versioninfo";
 import Warning from "@/components/Warning.vue";
 
 const layoutRef = shallowRef<HTMLElement>();
