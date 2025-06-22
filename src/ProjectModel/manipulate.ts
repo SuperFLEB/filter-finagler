@@ -7,7 +7,6 @@ import type {
 } from "@/ProjectModel/ProjectModel.ts";
 import {getFilterDef} from "@/ProjectModel/info.ts";
 import type {FilterAttributeValues, FilterDef} from "@/MFilter/types.ts";
-import feConnectionStatus from "@/ProjectModel/validate.ts";
 
 function _connect(outputId: string, outputFe: FilterElement, inputName: string, inputFe: FilterElement, universal: boolean) {
 	inputFe.inputs = {
@@ -69,7 +68,7 @@ export function connect(project: ProjectModel, filterId: string, outputName: str
 		return project;
 	}
 
-	const outputAttr = outFe.outputs?.[outputName] ?? outFilterDef?.outputs?.[outputName]?.universal ? outputName : undefined;
+	const outputAttr = outFilterDef?.outputs?.[outputName]?.universal ? outputName : outFilterDef?.outputs?.[outputName];
 
 	if (!outputAttr) {
 		console.error(`Could not find output for ${outputName}`);
@@ -180,8 +179,6 @@ export function remove(project: ProjectModel, filterName: string, instanceId: st
 		console.error(`Could not find instance ${instanceId} of filter ${filterName} in the project model.`);
 		return project;
 	}
-
-	const filterDef = getFilterDef(fe);
 
 	// Disconnect all connections coming into this node's inputs
 	for (const name of Object.keys(fe?.inputs ?? {})) {

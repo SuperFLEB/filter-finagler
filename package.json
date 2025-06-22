@@ -1,7 +1,7 @@
 {
   "name": "@superfleb/filter-finagler",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -22,13 +22,14 @@
     "@codemirror/view": "^6.36.3",
     "@dagrejs/dagre": "^1.1.4",
     "@superfleb/draggable": "^0.1.5",
-    "@superfleb/vue-vector-dot": "^0.0.3",
+    "@superfleb/vue-vector-dot": "^0.0.6",
     "@vue-flow/core": "^1.43.1",
     "colord": "^2.9.3",
     "vue": "^3.5.17",
     "xml-beautify": "^1.2.3"
   },
   "devDependencies": {
+    "@superfleb/bump": "^1.0.1",
     "@superfleb/vite-plugin-versioninfo": "^0.0.4",
     "@types/node": "^22.13.8",
     "@vitejs/plugin-vue": "^5.2.4",
