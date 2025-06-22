@@ -11,6 +11,8 @@ import XMLViewer from "@/components/XMLViewer.vue";
 import {type CSSProperties, ref, shallowRef} from "vue";
 import FilterElementEditor from "@/components/FilterElementEditor/FilterElementEditor.vue";
 import JSViewer from "@/components/JSViewer.vue";
+import version from "@superfleb/vite-plugin-versioninfo";
+import Warning from "@/components/Warning.vue";
 
 const layoutRef = shallowRef<HTMLElement>();
 const layoutStyleRef = ref<CSSProperties>({});
@@ -28,6 +30,7 @@ function select({filter, instanceId}: { filter?: string, instanceId?: string }):
 </script>
 
 <template>
+	<Warning />
 	<div class="layout" :style="layoutStyleRef" ref="layoutRef">
 		<ApplicationProvider>
 			<Tabs style="grid-area: nw">

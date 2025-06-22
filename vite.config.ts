@@ -1,15 +1,12 @@
 /// <reference types="vitest/config" />
+/// <reference types="vite/client" />
 
-import { defineConfig, mergeConfig } from 'vite';
+import versionPlugin from "@superfleb/vite-plugin-versioninfo/plugin";
 import vue from "@vitejs/plugin-vue";
 import * as path from "node:path";
 
-// https://vite.dev/config/
-const pluginsConfig = defineConfig({
-	plugins: [vue()],
-});
-
 const config = {
+	plugins: [versionPlugin(), vue()],
 	appType: "mpa", // disable history fallback
 	build: {
 		assetsInlineLimit: 0,
@@ -61,4 +58,4 @@ const config = {
 	}
 };
 
-export default mergeConfig(pluginsConfig, config);
+export default config;

@@ -29,6 +29,7 @@
     "xml-beautify": "^1.2.3"
   },
   "devDependencies": {
+    "@superfleb/vite-plugin-versioninfo": "^0.0.4",
     "@types/node": "^22.13.8",
     "@vitejs/plugin-vue": "^5.2.4",
     "@vitest/browser": "^3.2.4",

@@ -875,6 +875,7 @@ __metadata:
     "@codemirror/view": "npm:^6.36.3"
     "@dagrejs/dagre": "npm:^1.1.4"
     "@superfleb/draggable": "npm:^0.1.5"
+    "@superfleb/vite-plugin-versioninfo": "npm:^0.0.4"
     "@superfleb/vue-vector-dot": "npm:^0.0.3"
     "@types/node": "npm:^22.13.8"
     "@vitejs/plugin-vue": "npm:^5.2.4"
@@ -896,6 +897,15 @@ __metadata:
     xml-beautify: "npm:^1.2.3"
   languageName: unknown
   linkType: soft
+
+"@superfleb/vite-plugin-versioninfo@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@superfleb/vite-plugin-versioninfo@npm:0.0.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40superfleb%2Fvite-plugin-versioninfo%2F0.0.4%2F8b58b32a85e860c07583b883c771e788d67a9d67"
+  peerDependencies:
+    vite: "*"
+  checksum: 10c0/94af262cd625d875e398f9338c4e0059e33430453560595f5567e9616a79091372b7d5a39ce0ad6cbd75d344febcf94221e34a1610f487fb8d7299f210ddfe47
+  languageName: node
+  linkType: hard
 
 "@superfleb/vue-vector-dot@npm:^0.0.3":
   version: 0.0.3
