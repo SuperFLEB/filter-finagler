@@ -45,7 +45,6 @@ function close() {
 .hereBeDragons {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 1.25em;
-	font-style: oblique;
 
 	align-self: center;
 	margin: auto;
@@ -70,8 +69,6 @@ function close() {
 		display: block;
 		padding: 0.5em 2em;
 		text-align: center;
-
-		font-style: normal;
 
 		border: none;
 		color: #210;
